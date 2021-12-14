@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bloodbuddy.ChatActivity;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,79 +78,19 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Users user=usersList.get(position);
 
-        //Getting instance of firebase
-        auth=FirebaseAuth.getInstance();
-        currentUser=auth.getCurrentUser();
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        String senderPhone=currentUser.getPhoneNumber().substring(3);
-        String senderRoom =senderPhone+user.getMobile();
+        holder.chatName.setText(user.getName());
 
-        FirebaseDatabase.getInstance().getReference().child("chats")
-                .child(senderRoom).addValueEventListener(new ValueEventListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    String lastMsg = snapshot.child("lastMsg").getValue(String.class);
-                    long time =snapshot.child("lastMsgTime").getValue(Long.class);
-                    SimpleDateFormat dateFormat =new SimpleDateFormat("hh:mm a");
-
-                    holder.chatLastMsg.setText(lastMsg);
-                    holder.chatMsgTime.setText(dateFormat.format(new Date(time)));
-                }
-                else
-                {   holder.chatLastMsg.setText("");
-                    holder.chatMsgTime.setText("Tap to chat");
-                }
-
-
+            public void onClick(View view) {
+                Intent i = new Intent(context, ChatActivity.class);
+                i.putExtra("name", user.getName());
+                i.putExtra("mobile", user.getMobile());
+                context.startActivity(i);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
         });
 
 
-
-
-        //getting image url
-        String uid=user.getUid();
-        firebaseDatabase.getReference().child("users profile imgs").child(uid).child("imgUri")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        if(snapshot.exists())
-                            Glide.with(context).load((snapshot.getValue().toString())).
-                                    placeholder(R.drawable.ic_profile)
-                                    .into(holder.chatProfilePic);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-
-        holder.chatName.setText(user.getName());
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View v) {
-////                //On the clicking the list item intent is transferred to chat Activity with
-////                // credential to initiate chat
-////                Intent i=new Intent(context, ChatActivity.class);
-////                i.putExtra("name", user.getName());
-////                i.putExtra("uid", user.getUid());
-////                i.putExtra("phone", user.getMobile());
-////                context.startActivity(i);
-////            }
-//        });
     }
 
     @Override

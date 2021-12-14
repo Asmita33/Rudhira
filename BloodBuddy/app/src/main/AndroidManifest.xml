@@ -11,15 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserProfile"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity android:name=".UserProfile" />
         <activity android:name=".OTPSignUp" />
         <activity android:name=".OTPActivity" />
-        <activity android:name=".UserLogin"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".UserLogin"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AdminLogin" />
         <activity
             android:name=".loginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
