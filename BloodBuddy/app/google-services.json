@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "705325019509",
+    "project_id": "blood-donation-a-1634139739234",
+    "storage_bucket": "blood-donation-a-1634139739234.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705325019509:android:b75c27b789e623b76c633c",
+        "android_client_info": {
+          "package_name": "com.example.bloodbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705325019509-0vckp56lv9obu44i3blomu83e46bohcr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bloodbuddy",
+            "certificate_hash": "98501dfcc73bb390927ccc64cf58ec8ec79f01f3"
+          }
+        },
+        {
+          "client_id": "705325019509-b54gpco828fa2n76objlsful9r3csmv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bloodbuddy",
+            "certificate_hash": "64b35d4ed732ee1f3c92e6cd08cda458b92c9208"
+          }
+        },
+        {
+          "client_id": "705325019509-jn9tiqjdn8vsve70ko1hq0m46u3ul8gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bloodbuddy",
+            "certificate_hash": "858507bac941ff6683e3826cdbabb0799046b727"
+          }
+        },
+        {
+          "client_id": "705325019509-6o5itlfd9srcl2q3cft1fqneib8jsaov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm5HpgE-oqkizW1hg7d7iv3lnoFm7iA9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705325019509-6o5itlfd9srcl2q3cft1fqneib8jsaov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
