@@ -22,6 +22,8 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
     {
         ImageView chatProfilePic;
         TextView chatName;
+        TextView chatLastMsg;
+        TextView chatMsgTime;
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -29,6 +31,8 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
             // binding the elements
             chatProfilePic = itemView.findViewById(R.id.chatProfilePic);
             chatName = itemView.findViewById(R.id.chatName);
+            chatLastMsg = itemView.findViewById(R.id.chatLastMsg);
+            chatMsgTime = itemView.findViewById(R.id.chatMsgTime);
         }
     }
 
