@@ -1,4 +1,4 @@
-package com.example.bloodbuddy.fragments;
+package com.example.bloodbuddy.Adapers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.bloodbuddy.ChatActivity;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolder>
 {
@@ -85,7 +79,7 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
             public void onClick(View view) {
                 Intent i = new Intent(context, ChatActivity.class);
                 i.putExtra("name", user.getName());
-                i.putExtra("mobile", user.getMobile());
+                i.putExtra("uid", user.getUid());
                 context.startActivity(i);
             }
         });

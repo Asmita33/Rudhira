@@ -1,6 +1,5 @@
 package com.example.bloodbuddy.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bloodbuddy.Adapers.chatAdapter;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
