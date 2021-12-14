@@ -4,29 +4,39 @@ import android.widget.ImageView;
 
 public class Users {
 
-    private int profilePic;
+//    private int profilePic;*/
     private String email;
     private String name;
     private String mobile;
     private String uid;
+    private String imgUri;
 
     public Users()
     {
 
     }
 
-    public Users(int pic, String name)
+    public Users(String pic, String name)
     {
-        this.profilePic = pic;
+        this.imgUri = pic;
         this.name = name;
     }
 
-    public int getProfilePic() {
-        return profilePic;
+    //Constructor used for storing profile images in realtime firebase database
+    public Users(String uid,String phone,String imgUri)
+    {
+        this.uid=uid;
+        this.mobile=phone;
+        this.imgUri=imgUri;
     }
 
-    public void setProfilePic(int profilePic) {
-        this.profilePic = profilePic;
+
+    public String getImgUri() {
+        return imgUri;
+    }
+
+    public void setImgUri(String imgUri) {
+        this.imgUri = imgUri;
     }
 
     public String getUid() {

@@ -1,7 +1,9 @@
 package com.example.bloodbuddy.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,17 @@ import android.view.ViewGroup;
 
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -30,6 +43,11 @@ public class ChatFragment extends Fragment {
     // create  vars
     RecyclerView recyclerView;
     ArrayList<Users> usersList;
+
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseUser currentUser;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -73,16 +91,40 @@ public class ChatFragment extends Fragment {
         usersList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.chatRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        chatAdapter rvAdapter = new chatAdapter(this.getContext(), usersList);
+        recyclerView.setAdapter(rvAdapter);
+
+        db=FirebaseFirestore.getInstance();
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        auth=FirebaseAuth.getInstance();
+        currentUser=auth.getCurrentUser();
+        String senderPhone=currentUser.getPhoneNumber().substring(3);
+
 
         //HERE: create/fetch the data here
-        usersList.add(new Users(R.drawable.chat1, "Naam rakhna hai"));
-        usersList.add(new Users(R.drawable.chat2, "Naam me kya rakha hai"));
-        usersList.add(new Users(R.drawable.chat3, "Naam socha ni ja raha"));
+//        usersList.add(new Users(R.drawable.chat1, "Naam rakhna hai"));
+//        usersList.add(new Users(R.drawable.chat2, "Naam me kya rakha hai"));
+//        usersList.add(new Users(R.drawable.chat3, "Naam socha ni ja raha"));
 
+        firebaseDatabase.getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                usersList.clear();
 
+                for(DataSnapshot snapshot1 : snapshot.getChildren())
+                {
+                    Users user = snapshot1.getValue(Users.class);
+                    usersList.add(user);
+                }
+                rvAdapter.notifyDataSetChanged();
 
-        //HERE: set RV adapter
-        recyclerView.setAdapter(new chatAdapter(this.getContext(), usersList));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         return view;
     }

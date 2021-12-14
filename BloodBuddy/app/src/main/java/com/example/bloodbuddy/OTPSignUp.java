@@ -25,6 +25,7 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +38,7 @@ public class OTPSignUp extends AppCompatActivity {
 
 
     FirebaseDatabase firebaseDatabase;
+    FirebaseStorage firebaseStorage;
     private String mAuthCredentials;
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
@@ -104,6 +106,9 @@ public class OTPSignUp extends AppCompatActivity {
                     user.setEmail(email);
                     user.setMobile(mobile);
                     user.setName(name);
+
+                    firebaseDatabase.getReference().child("users").child(mobile).setValue(user);
+//                            .addOnSuccessListener()
 
 
 
