@@ -1,6 +1,10 @@
 package com.example.bloodbuddy;
 
+import android.widget.ImageView;
+
 public class Users {
+
+    private int profilePic;
     private String email;
     private String name;
     private String mobile;
@@ -9,6 +13,20 @@ public class Users {
     public Users()
     {
 
+    }
+
+    public Users(int pic, String name)
+    {
+        this.profilePic = pic;
+        this.name = name;
+    }
+
+    public int getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(int profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getUid() {

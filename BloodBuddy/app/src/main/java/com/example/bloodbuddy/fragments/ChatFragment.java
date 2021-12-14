@@ -3,12 +3,17 @@ package com.example.bloodbuddy.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bloodbuddy.R;
+import com.example.bloodbuddy.Users;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +27,9 @@ public class ChatFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // create  vars
+    RecyclerView recyclerView;
+    ArrayList<Users> usersList;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -51,16 +56,34 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        //HERE: Get and Inflate the created layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        // HERE: instantiate the variables
+        usersList = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.chatRV);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //HERE: create/fetch the data here
+        usersList.add(new Users(R.drawable.chat1, "Naam rakhna hai"));
+        usersList.add(new Users(R.drawable.chat2, "Naam me kya rakha hai"));
+        usersList.add(new Users(R.drawable.chat3, "Naam socha ni ja raha"));
+
+
+
+        //HERE: set RV adapter
+        recyclerView.setAdapter(new chatAdapter(this.getContext(), usersList));
+
+        return view;
     }
 }
