@@ -20,4 +20,9 @@
     <string name="sign_up_verification_msg1">We just sent a code</string>
     <string name="sign_up_verification_msg2">Choosing Next means that you agree to the Privacy Statement</string>
     <string name="sign_up_phone_next">Next</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="id">Enter ID</string>
+    <string name="profile_page_dob">Enter DOB</string>
+    <string name="profile_page_name">Name</string>
+    <string name="work_address">Work Address</string>
 </resources>
