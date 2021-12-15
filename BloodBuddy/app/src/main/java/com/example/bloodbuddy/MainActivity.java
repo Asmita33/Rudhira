@@ -127,11 +127,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bottomNavigation =findViewById(R.id.bottom_navigation);
 
-        bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_notification));
+        bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_notification));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_notification));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_notification));
-        bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_notification));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_baseline_local_hospital));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_baseline_location_searching_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_baseline_chat_24));
 
 
 
@@ -157,9 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loadFragment(fragment);
 
             }
-
-
-
             private void loadFragment(Fragment fragment) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,fragment)
                         .commit();
@@ -169,18 +166,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Set notification count
         // bottomNavigation.setCount(1,"10");
         //Set home fragment initially selected
-        bottomNavigation.show(1,true);
+        bottomNavigation.show(2,true);
 
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-              //  Toast.makeText(getApplicationContext(),"You Clicked"+item.getId(),Toast.LENGTH_LONG).show();
+
             }
         });
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
-              //  Toast.makeText(getApplicationContext(),"You Reselected"+item.getId(),Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -216,4 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+
+
 }
