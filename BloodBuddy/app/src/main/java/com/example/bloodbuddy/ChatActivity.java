@@ -1,5 +1,6 @@
 package com.example.bloodbuddy;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,10 +10,15 @@ import com.example.bloodbuddy.Adapers.MessagesAdaptor;
 import com.example.bloodbuddy.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -22,6 +28,11 @@ public class ChatActivity extends AppCompatActivity {
 
     String senderRoom, receiverRoom;
     FirebaseDatabase database;
+    FirebaseAuth auth;
+    FirebaseUser currentUser;
+
+    ArrayList<Message> messageArrayList;
+    MessagesAdaptor messagesAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,36 +42,75 @@ public class ChatActivity extends AppCompatActivity {
 
         messages = new ArrayList<>();
         adaptor = new MessagesAdaptor(this, messages);
+        auth = FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
+        messageArrayList = new ArrayList<>();
+        messagesAdaptor = new MessagesAdaptor(this, messageArrayList);
 
         String name = getIntent().getStringExtra("name");
         String receiverUid = getIntent().getStringExtra("uid");
         String senderUid = FirebaseAuth.getInstance().getUid(); // uid of logged in user
 
         String receiverPhone = getIntent().getStringExtra("mobile");
+        String senderPhone = currentUser.getPhoneNumber();
 
-//        String senderPhone = FirebaseAuth.getInstance().get
-
-        senderRoom = senderUid + receiverUid;
-        receiverRoom = receiverUid + senderUid;
+        senderRoom = senderPhone + "_" +receiverPhone;
+        receiverRoom = receiverPhone  +"_" +senderPhone;
 
         database = FirebaseDatabase.getInstance();
 
+        // notifying adapter and adding to RV
+        database.getReference().child("chats").child(senderRoom).child("messages")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messages.clear();
+                        for(DataSnapshot snapshot1 : snapshot.getChildren())
+                        {
+                            Message message =snapshot1.getValue(Message.class);//Typecasting
+                            messages.add(message);
+                        }
+                        messagesAdaptor.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+        // updating the Realtime DB with messages
         binding.sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String messageText = binding.messageBox.getText().toString();
 
                 Date date = new Date();
+
                 Message msg = new Message(messageText, senderUid, date.getTime());
                 binding.messageBox.setText("");
 
+                HashMap<String,Object> lastMsgObj =new HashMap<>();
+                lastMsgObj.put("lastMsg",msg.getMsg());
+                lastMsgObj.put("lastMsgTime",date.getTime());
+
+                // updating last messages in oth rooms
+                database.getReference().child("chats").child(senderRoom).
+                        updateChildren(lastMsgObj);
+                database.getReference().child("chats").child(receiverRoom).
+                        updateChildren(lastMsgObj);
+
+
                 database.getReference().child("chats").child(senderRoom)
-                        .child("messages").setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        .child("messages").push().setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
 
-                        database.getReference().child("chats").child(receiverRoom)
-                                .child("messages").setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        database.getReference().child("chats")
+                                .child(receiverRoom).child("messages").push()
+                                .setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
 
