@@ -2,6 +2,7 @@ package com.example.bloodbuddy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,16 +24,13 @@ import java.util.HashMap;
 public class ChatActivity extends AppCompatActivity {
 
     ActivityChatBinding binding;
-    MessagesAdaptor adaptor;
-    ArrayList<Message> messages;
+    MessagesAdaptor messagesAdaptor;
+    ArrayList<Message> messageArrayList;
 
     String senderRoom, receiverRoom;
     FirebaseDatabase database;
     FirebaseAuth auth;
     FirebaseUser currentUser;
-
-    ArrayList<Message> messageArrayList;
-    MessagesAdaptor messagesAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +38,13 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());  // took care of all findVIewByID
         setContentView(binding.getRoot());
 
-        messages = new ArrayList<>();
-        adaptor = new MessagesAdaptor(this, messages);
-        auth = FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
         messageArrayList = new ArrayList<>();
         messagesAdaptor = new MessagesAdaptor(this, messageArrayList);
+        auth = FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
+
+        binding.chatActivityRV.setAdapter(messagesAdaptor);
+        binding.chatActivityRV.setLayoutManager(new LinearLayoutManager(this));
 
         String name = getIntent().getStringExtra("name");
         String receiverUid = getIntent().getStringExtra("uid");
@@ -64,11 +63,11 @@ public class ChatActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        messages.clear();
+                        messageArrayList.clear();
                         for(DataSnapshot snapshot1 : snapshot.getChildren())
                         {
                             Message message =snapshot1.getValue(Message.class);//Typecasting
-                            messages.add(message);
+                            messageArrayList.add(message);
                         }
                         messagesAdaptor.notifyDataSetChanged();
                     }
@@ -96,13 +95,14 @@ public class ChatActivity extends AppCompatActivity {
                 lastMsgObj.put("lastMsg",msg.getMsg());
                 lastMsgObj.put("lastMsgTime",date.getTime());
 
-                // updating last messages in oth rooms
+                // updating last messages in both rooms
                 database.getReference().child("chats").child(senderRoom).
                         updateChildren(lastMsgObj);
                 database.getReference().child("chats").child(receiverRoom).
                         updateChildren(lastMsgObj);
 
 
+                //adding to the list of messages
                 database.getReference().child("chats").child(senderRoom)
                         .child("messages").push().setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
