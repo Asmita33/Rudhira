@@ -38,13 +38,16 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());  // took care of all findVIewByID
         setContentView(binding.getRoot());
 
+        // got the list of messages, adaptor and set to the RV
         messageArrayList = new ArrayList<>();
         messagesAdaptor = new MessagesAdaptor(this, messageArrayList);
-        auth = FirebaseAuth.getInstance();
-        currentUser = auth.getCurrentUser();
 
         binding.chatActivityRV.setAdapter(messagesAdaptor);
         binding.chatActivityRV.setLayoutManager(new LinearLayoutManager(this));
+
+        // get the current user and credentials
+        auth = FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
 
         String name = getIntent().getStringExtra("name");
         String receiverUid = getIntent().getStringExtra("uid");
@@ -53,12 +56,13 @@ public class ChatActivity extends AppCompatActivity {
         String receiverPhone = getIntent().getStringExtra("mobile");
         String senderPhone = currentUser.getPhoneNumber();
 
+        // creating 2 different rooms to update the data differently for 2 diff users
         senderRoom = senderPhone + "_" +receiverPhone;
         receiverRoom = receiverPhone  +"_" +senderPhone;
 
         database = FirebaseDatabase.getInstance();
 
-        // notifying adapter and adding to RV
+        // notifying adapter and adding messages to RV
         database.getReference().child("chats").child(senderRoom).child("messages")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -102,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
                         updateChildren(lastMsgObj);
 
 
-                //adding to the list of messages
+                //adding to the list of messages in both rooms
                 database.getReference().child("chats").child(senderRoom)
                         .child("messages").push().setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

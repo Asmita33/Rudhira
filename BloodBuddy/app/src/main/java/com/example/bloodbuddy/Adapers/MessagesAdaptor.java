@@ -30,6 +30,7 @@ public class MessagesAdaptor extends RecyclerView.Adapter
     }
 
 
+    // to return the type of view : sent_chat or received_chat
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,6 +59,7 @@ public class MessagesAdaptor extends RecyclerView.Adapter
     }
 
     @Override
+    // we'll bind the 2 views accordingly
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
     {
         Message msg = messages.get(position);
@@ -79,7 +81,7 @@ public class MessagesAdaptor extends RecyclerView.Adapter
         return messages.size();
     }
 
-    // 2 view holders for 2 types of chats
+    // 2 view holder classes for 2 types of chats
     public class SentViewHolder  extends RecyclerView.ViewHolder{
         TextView sentChat;
 
