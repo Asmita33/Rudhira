@@ -80,6 +80,7 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
                 Intent i = new Intent(context, ChatActivity.class);
                 i.putExtra("name", user.getName());
                 i.putExtra("uid", user.getUid());
+                i.putExtra("mobile", user.getMobile());
                 context.startActivity(i);
             }
         });

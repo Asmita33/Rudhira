@@ -36,6 +36,10 @@ public class ChatActivity extends AppCompatActivity {
         String receiverUid = getIntent().getStringExtra("uid");
         String senderUid = FirebaseAuth.getInstance().getUid(); // uid of logged in user
 
+        String receiverPhone = getIntent().getStringExtra("mobile");
+
+//        String senderPhone = FirebaseAuth.getInstance().get
+
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
