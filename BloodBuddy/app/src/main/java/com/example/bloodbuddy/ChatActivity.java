@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,12 +43,19 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser currentUser;
     FirebaseStorage storage;
+    String receiverUid;
+    String senderUid;
+
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());  // took care of all findVIewByID
         setContentView(binding.getRoot());
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Uploading message...");
 
         // got the list of messages, adaptor and set to the RV
         messageArrayList = new ArrayList<>();
@@ -62,8 +70,8 @@ public class ChatActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
 
         String name = getIntent().getStringExtra("name");
-        String receiverUid = getIntent().getStringExtra("uid");
-        String senderUid = FirebaseAuth.getInstance().getUid(); // uid of logged in user
+        receiverUid = getIntent().getStringExtra("uid");
+        senderUid = FirebaseAuth.getInstance().getUid(); // uid of logged in user
 
         String receiverPhone = getIntent().getStringExtra("mobile");
         String senderPhone = currentUser.getPhoneNumber();
@@ -139,11 +147,12 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        // attachment button clicked
         binding.attachmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_GET_CONTENT); // get image from gallery
                 intent.setType("image/*");
 //                intent.setType("*/*"); // for every type of file
                 startActivityForResult(intent, 25);
@@ -156,6 +165,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    // What happens after an image is selected as attachment
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -165,15 +175,58 @@ public class ChatActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
             Calendar calendar = Calendar.getInstance();
             StorageReference reference = storage.getReference().child("chats").child(calendar.getTimeInMillis() +"");
+            dialog.show();
 
+            // upload image
             reference.putFile(selectedImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    dialog.dismiss(); // image uploaded
                     if(task.isSuccessful())
                     {
+                        // now we need to show the image in chat
                         reference.getDownloadUrl().addOnSuccessListener(uri -> {
                             String filepath = uri.toString();
-                            Toast.makeText(ChatActivity.this, filepath, Toast.LENGTH_SHORT).show();
+
+                            // same code as sending message
+                            String messageText = binding.messageBox.getText().toString();
+
+                            Date date = new Date();
+
+                            Message msg = new Message(messageText, senderUid, date.getTime());
+                            msg.setImageUrl(filepath); // attaching filepath
+                            binding.messageBox.setText("");
+
+                            HashMap<String,Object> lastMsgObj =new HashMap<>();
+                            lastMsgObj.put("lastMsg",msg.getMsg());
+                            lastMsgObj.put("lastMsgTime",date.getTime());
+
+                            // updating last messages in both rooms
+                            database.getReference().child("chats").child(senderRoom).
+                                    updateChildren(lastMsgObj);
+                            database.getReference().child("chats").child(receiverRoom).
+                                    updateChildren(lastMsgObj);
+
+
+                            //adding to the list of messages in both rooms
+                            database.getReference().child("chats").child(senderRoom)
+                                    .child("messages").push().setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                    database.getReference().child("chats")
+                                            .child(receiverRoom).child("messages").push()
+                                            .setValue(msg).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+
+                                        }
+                                    });
+
+                                }
+                            });
+
+//                            Toast.makeText(ChatActivity.this, filepath, Toast.LENGTH_SHORT).show();
 
                         });
                     }

@@ -2,8 +2,18 @@ package com.example.bloodbuddy;
 
 public class Message
 {
-    private String msgID, msg, senderID;
+    private String msgID, msg, senderID, imageUrl;
     private long timeStamp;
+
+    public boolean isHasImageAttachment() {
+        return hasImageAttachment;
+    }
+
+    public void setHasImageAttachment(boolean hasImageAttachment) {
+        this.hasImageAttachment = hasImageAttachment;
+    }
+
+    boolean hasImageAttachment;
 
     public Message() {
     }
@@ -44,5 +54,14 @@ public class Message
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        this.hasImageAttachment = true;
     }
 }
