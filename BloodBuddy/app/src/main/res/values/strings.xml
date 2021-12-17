@@ -25,4 +25,5 @@
     <string name="profile_page_dob">Enter DOB</string>
     <string name="profile_page_name">Name</string>
     <string name="work_address">Work Address</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiYXl1c2h3YW50IiwiYSI6ImNrdW4wb3h6NzBvb20ydXRodzF5ZTBtd3oifQ.mWaUlR6sMzWE_-QpaHiwAA</string>
 </resources>

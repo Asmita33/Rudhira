@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bloodbuddy.R;
+import com.mapbox.maps.MapView;
+import com.mapbox.maps.Style;
+import com.mapbox.maps.plugin.Plugin;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,8 @@ public class MapFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private MapView mapview;
 
     public MapFragment() {
         // Required empty public constructor
@@ -61,6 +66,24 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        mapview = view.findViewById(R.id.mapView);
+        mapview.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapview.onStart();
+    }
+//    onSta
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapview.onStop();
     }
 }
