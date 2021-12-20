@@ -10,6 +10,9 @@ public class Users {
     private String mobile;
     private String uid;
     private String imgUri;
+    private String dob;
+    private String bloodGrp;
+    private String address;
 
     public Users()
     {
@@ -30,6 +33,29 @@ public class Users {
         this.imgUri=imgUri;
     }
 
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getBloodGrp() {
+        return bloodGrp;
+    }
+
+    public void setBloodGrp(String bloodGrp) {
+        this.bloodGrp = bloodGrp;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getImgUri() {
         return imgUri;
