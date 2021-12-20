@@ -18,7 +18,8 @@
             android:name=".ChatActivity"
             android:exported="false" />
 
-        <activity android:name=".UserProfile" />
+        <activity android:name=".UserProfile"
+            android:label="@string/user_profile"/>
         <activity android:name=".OTPSignUp" />
         <activity android:name=".OTPActivity" />
         <activity

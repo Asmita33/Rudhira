@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.bloodbuddy.fragments.BloodBanksFragment;
 import com.example.bloodbuddy.fragments.ChatFragment;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser currentUser;
     private TextView userName,userPhone;
     private Button headerBtn;
+    private ImageView headerProfileImage;
     private View hView;
     static String username="";
     public  static String userphone="";
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        profileImage=findViewById(R.id.imageView3);
+        profileImage=findViewById(R.id.profile_img);
         mDrawerLayout=(DrawerLayout) findViewById(R.id.container);
         navigationView=findViewById(R.id.nav_view_side);
         mToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userName=hView.findViewById(R.id.user_name);
         userPhone=hView.findViewById(R.id.user_phone);
         headerBtn=hView.findViewById(R.id.header_button);
+        headerProfileImage=hView.findViewById(R.id.profilePicture);
         welcomeNote=findViewById(R.id.welcome_note);
 
         headerBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +86,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //loads profile pic fast
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+                    user.setImgUri(documentSnapshot.getString("imgUri"));
+                    //For navHeader
+                    userName.setText(user.getName());
+                    userPhone.setText(user.getMobile());
+                    if(user.getImgUri()!="")
+                    {
+                        Glide.with(MainActivity.this).load(user.getImgUri())
+                                .placeholder(R.drawable.ic_profile).into(profileImage);
+                        Glide.with(MainActivity.this).load(user.getImgUri())
+                                .placeholder(R.drawable.ic_profile).into(headerProfileImage);
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this,"Error in loading user profile image",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //loads user details from database
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -94,12 +123,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     user.setMobile(documentSnapshot.getString("mobile"));
                     user.setEmail(documentSnapshot.getString("email"));
                     user.setUid(documentSnapshot.getString("uid"));
+                    user.setImgUri(documentSnapshot.getString("imgUri"));
                     //For navHeader
                     userName.setText(user.getName());
                     userPhone.setText(user.getMobile());
+                    if(user.getImgUri()!="")
+                    {
+                        Glide.with(MainActivity.this).load(user.getImgUri())
+                                .placeholder(R.drawable.ic_profile).into(profileImage);
+                        Glide.with(MainActivity.this).load(user.getImgUri())
+                                .placeholder(R.drawable.ic_profile).into(headerProfileImage);
+                    }
                     username=user.getName();
                     userphone=user.getMobile();
-
                     //welcome note
                     welcomeNote.setText("Hi "+user.getName()+",");
 
@@ -130,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_notification));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_baseline_local_hospital));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_icons8_drop_of_blood_48__1_));
         bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_baseline_location_searching_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_baseline_chat_24));
 

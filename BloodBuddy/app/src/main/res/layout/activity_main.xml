@@ -84,10 +84,10 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mbn_backgroundBottomColor="#3c415e"
+            app:mbn_backgroundBottomColor="@color/white"
             app:mbn_circleColor="@color/colorPrimaryDark"
             app:mbn_countBackgroundColor="@color/colorAccent"
-            app:mbn_countTextColor="#3c415e"
+            app:mbn_countTextColor="@color/design_default_color_on_secondary"
             app:mbn_defaultIconColor="@color/colorPrimary"
             app:mbn_selectedIconColor="@color/colorPrimary" />
 
