@@ -24,6 +24,10 @@
     <string name="id">Enter ID</string>
     <string name="profile_page_dob">Enter DOB</string>
     <string name="profile_page_name">Name</string>
+
+    <string name="work_address">Work Address</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiYXl1c2h3YW50IiwiYSI6ImNrdW4wb3h6NzBvb20ydXRodzF5ZTBtd3oifQ.mWaUlR6sMzWE_-QpaHiwAA</string>
+
     <string name="address">Address</string>
     <string name="blood_group">Blood Group</string>
     <string name="update_changes">Update Changes</string>
@@ -36,4 +40,5 @@
         <item>AB +ve</item>
         <item>O -ve</item>
     </string-array>
+
 </resources>

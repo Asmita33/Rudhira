@@ -39,7 +39,7 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:id="@+id/attachment"
+                android:id="@+id/attachmentBtn"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginRight="12dp"
@@ -48,7 +48,7 @@
                 app:tint="#919191" />
 
             <ImageView
-                android:id="@+id/camera"
+                android:id="@+id/cameraBtn"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginRight="12dp"

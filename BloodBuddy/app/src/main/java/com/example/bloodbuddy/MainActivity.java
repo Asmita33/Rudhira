@@ -58,20 +58,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+
+        // binding layouts
+
         profileImage=findViewById(R.id.profile_img);
+
         mDrawerLayout=(DrawerLayout) findViewById(R.id.container);
         navigationView=findViewById(R.id.nav_view_side);
+
         mToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // getting current user from firebase authentication
         auth=FirebaseAuth.getInstance();
         currentUser=auth.getCurrentUser();
         db=FirebaseFirestore.getInstance();
         if(currentUser==null)
             sendToLogin();
+
         ref=db.collection("Users").document(currentUser.getPhoneNumber());
         hView=navigationView.getHeaderView(0);
+
+        // binding
         userName=hView.findViewById(R.id.user_name);
         userPhone=hView.findViewById(R.id.user_phone);
         headerBtn=hView.findViewById(R.id.header_button);
@@ -164,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         bottomNavigation =findViewById(R.id.bottom_navigation);
 
+        // added all the icons of all fragments
         bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_notification));
         bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_icons8_drop_of_blood_48__1_));
@@ -173,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+        // adding all fragments to the bottom navigation view
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
