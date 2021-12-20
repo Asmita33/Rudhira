@@ -13,7 +13,15 @@
         mapbox:mapbox_cameraTargetLat="26.765"
         mapbox:mapbox_cameraTargetLng="83.36"
         mapbox:mapbox_cameraZoom="12"
-        />
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/map_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="3dp" />
+    </com.mapbox.maps.MapView>
+
 <!--        mapbox:mapbox_styleUrl = "mapbox://styles/mapbox/streets-v10"-->
 
 

@@ -1,5 +1,6 @@
 package com.example.bloodbuddy.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,10 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bloodbuddy.MapSearchActivity;
 import com.example.bloodbuddy.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.Style;
-import com.mapbox.maps.plugin.Plugin;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +32,7 @@ public class MapFragment extends Fragment {
     private String mParam2;
 
     private MapView mapview;
+    FloatingActionButton mapfab;
 
     public MapFragment() {
         // Required empty public constructor
@@ -70,6 +73,15 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapview = view.findViewById(R.id.mapView);
         mapview.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS);
+
+        mapfab = view.findViewById(R.id.map_fab);
+        mapfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =  new Intent(getContext(), MapSearchActivity.class);
+                startActivity(i);
+            }
+        });
 
         return view;
     }
