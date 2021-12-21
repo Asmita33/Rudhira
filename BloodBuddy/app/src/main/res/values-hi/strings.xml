@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BloodBuddy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_out">लॉग आउट</string>
+    <string name="about_us">हमारे बारे में</string>
+    <string name="drawer_open">खोले</string>
+    <string name="drawer_close">बंद करे</string>
+    <string name="login_as_admin">एडमिन लॉगिन करें</string>
+    <string name="enter_number">नंबर डालें</string>
+    <string name="name">नाम</string>
+    <string name="email">ईमेल</string>
+    <string name="sign_in">साइन इन करे</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="number">मोबाइल नंबर</string>
+    <string name="otp_page_enter_code">कोड दर्ज करें</string>
+    <string name="otp_page_text">हमने आपके फोन नंबर पर मैसेज किया। साइन इन करने के लिए कृपया कोड दर्ज करें।</string>
+    <string name="otp_page_sign_in">साइन इन करे</string>
+    <string name="sign_up_verification_text">फ़ोन नंबर सत्यापित करें</string>
+    <string name="sign_up_verification_msg1">हमने अभी एक कोड भेजा है</string>
+    <string name="sign_up_verification_msg2">अगला चुनने का अर्थ है कि आप गोपनीयता कथन से सहमत हैं</string>
+    <string name="sign_up_phone_next">अगला</string>
+    <string name="enter_password">पास वर्ड दर्ज करें</string>
+    <string name="id">आईडी दर्ज करें</string>
+    <string name="profile_page_dob">जन्मतिथि दर्ज करें</string>
+    <string name="profile_page_name">नाम</string>
+
+    <string name="work_address">कार्यालय का पता</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiYXl1c2h3YW50IiwiYSI6ImNrdW4wb3h6NzBvb20ydXRodzF5ZTBtd3oifQ.mWaUlR6sMzWE_-QpaHiwAA</string>
+
+    <string name="address">पता</string>
+    <string name="blood_group">रक्त समूह</string>
+    <string name="update_changes">परिवर्तन अपडेट करें</string>
+    <string name="user_profile">उपयोगकर्ता प्रोफ़ाइल</string>
+    <string name="raise_request">अनुरोध उठाएँ</string>
+    <string name="blood_requests">रक्त अनुरोध</string>
+    <string name="age">उम्र</string>
+    <string name="amount">राशि</string>
+    <string name="location">स्थान</string>
+    <string name="condition">स्थिति</string>
+    <string name="document">डाक्यूमेंट</string>
+    <string name="mark_as_genuine">असली के रूप में चिह्नित करें</string>
+    <string name="delete_request">अनुरोध हटा दें</string>
+    <string name="my_request">मेरा अनुरोध</string>
+
+    <string-array name="blood_grps">
+        <item>ओ +वी</item>
+        <item>ए +वी</item>
+        <item>बी +वी</item>
+        <item>एबी +वी</item>
+        <item>ओ -वी</item>
+    </string-array>
+
+    <string-array name="condition">
+        <item>गंभीर</item>
+        <item>उदारवादी</item>
+        <item>हल्का</item>
+    </string-array>
+
+</resources>
