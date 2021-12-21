@@ -242,6 +242,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.logOut:auth.signOut();
                 sendToLogin();
                 break;
+            case R.id.my_request:
+
+                break;
 
         }
         return true;

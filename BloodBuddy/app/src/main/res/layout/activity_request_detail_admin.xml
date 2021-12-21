@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".bloodRequest.RequestDetailAdmin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/profile_page_name"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_perm_identity_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:cursorVisible="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/email"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:textSize="14dp"  />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_number"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/number"
+            app:prefixText="+91"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_age"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/age"
+            app:endIconMode="custom"
+            app:suffixText="Years"
+            app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:inputType="number"
+                android:editable="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_bloodGrp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/blood_group"
+            app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bloodGrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:editable="false"
+                android:textSize="14dp"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_amount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:suffixText="Liters"
+            android:hint="@string/amount"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:inputType="number"
+                android:editable="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_location"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/location"
+            app:endIconMode="custom"
+            app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_condition"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/condition"
+            app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:editable="false"
+                android:textSize="14dp"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_document"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/document"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_baseline_cloud_upload_24"
+            app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_document"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:editable="false"
+                android:textSize="14dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/accept_request"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="@string/mark_as_genuine"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_width="0dp" />
+
+            <Button
+                android:id="@+id/delete_request"
+                android:layout_weight="1"
+                android:width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="@string/delete_request"
+                android:textColor="@color/white"
+                android:textSize="11dp"
+                android:textStyle="bold"
+                android:layout_width="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

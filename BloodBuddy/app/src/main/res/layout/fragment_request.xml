@@ -5,10 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".fragments.RequestFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Blood Request Fragment" />
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/raise_request"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/raise_request"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/blood_list"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/blood_requests"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </FrameLayout>

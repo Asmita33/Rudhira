@@ -4,6 +4,10 @@
         android:icon="@drawable/ic_baseline_exit"
         android:title="@string/log_out"/>
 
+    <item android:id="@+id/my_request"
+        android:icon="@drawable/ic_icons8_drop_of_blood_48__1_"
+        android:title="@string/my_request"/>
+
     <item android:id="@+id/about"
         android:icon="@drawable/ic_baseline_live_help"
         android:title="@string/about_us"/>
