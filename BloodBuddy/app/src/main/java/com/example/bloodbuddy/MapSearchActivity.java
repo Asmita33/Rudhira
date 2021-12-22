@@ -37,8 +37,8 @@ public class MapSearchActivity extends AppCompatActivity
 
         Application app = getApplication();
 
-        MapboxSearchSdk.initialize(app, getString(R.string.mapbox_access_token)
-        , LocationEngineProvider.getBestLocationEngine(this));
+//        MapboxSearchSdk.initialize(app, getString(R.string.mapbox_access_token)
+//        , LocationEngineProvider.getBestLocationEngine(this));
 
         setContentView(R.layout.activity_map_search);
 
@@ -46,18 +46,30 @@ public class MapSearchActivity extends AppCompatActivity
         searchBottomSheetView.initializeSearch(savedInstanceState,
                 new SearchBottomSheetView.Configuration());
 
-        if(!checkAccessFineLocPermission()){
-//            ActivityCompat.requestPermissions(this, );
-
-        }
+////        if(!checkAccessFineLocPermission()){
+//////            ActivityCompat.requestPermissions(this, );
+////
+////        }
+//
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+////            return;
+//            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION} , 25);
+//        }
 
     }
 
 
-    private boolean checkAccessFineLocPermission()
-    {
-        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
-        int res = this.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }
+//    private boolean checkAccessFineLocPermission()
+//    {
+//        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+//        int res = this.checkCallingOrSelfPermission(permission);
+//        return (res == PackageManager.PERMISSION_GRANTED);
+//    }
 }

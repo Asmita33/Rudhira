@@ -82,6 +82,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
         activityRequestAdminBinding.acceptRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                  patient.setIsValid("true");
                  db.collection("Request").document("+91"+patient.getMobile())
                          .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -91,6 +92,8 @@ public class RequestDetailAdmin extends AppCompatActivity {
                                  Toast.LENGTH_LONG).show();
                      }
                  });
+            // Message to user on acceptance of request
+
             }
         });
 

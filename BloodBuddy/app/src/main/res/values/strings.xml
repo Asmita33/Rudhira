@@ -42,6 +42,12 @@
     <string name="mark_as_genuine">Mark as Genuine</string>
     <string name="delete_request">Delete Request</string>
     <string name="my_request">My Request</string>
+    <string name="cool_down">Cool down</string>
+    <string name="seekers">Seekers</string>
+    <string name="registered_requests">Registered Requests</string>
+    <string name="donors">Donors</string>
+    <string name="status">Status:</string>
+    <string name="blood_required">Blood Group Required</string>
 
     <string-array name="blood_grps">
         <item>O +ve</item>

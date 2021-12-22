@@ -60,6 +60,7 @@ public class RequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getContext(), RaiseRequest.class);
+                i.putExtra("parent","request");
                 startActivity(i);
             }
         });

@@ -2,11 +2,13 @@ package com.example.bloodbuddy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.bloodbuddy.bloodRequest.RaiseRequest;
 import com.example.bloodbuddy.fragments.BloodBanksFragment;
 import com.example.bloodbuddy.fragments.ChatFragment;
 import com.example.bloodbuddy.fragments.FeedFragment;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth auth;
     Users user=new Users();
     private FirebaseFirestore db;
-    private DocumentReference ref;
+    private DocumentReference ref,ref1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -239,16 +242,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId())
         {
-            case R.id.logOut:auth.signOut();
+            case R.id.logOut: auth.signOut();
                 sendToLogin();
                 break;
-            case R.id.my_request:
+            case R.id.my_request: displayRequest();
 
                 break;
 
         }
         return true;
     }
+
+    private void displayRequest() {
+
+        ref1=db.collection("Request").document(currentUser.getPhoneNumber());
+        ref1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+                    Intent i=new Intent(MainActivity.this, RaiseRequest.class);
+                    i.putExtra("parent","user");
+                    startActivity(i);
+                }
+                if(!documentSnapshot.exists())
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("No request!");
+                    builder.setMessage("No request has been registered recently.");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    AlertDialog ad=builder.create();
+                    ad.show();
+                }
+            }
+        });
+
+    }
+
     private void sendToLogin()
     {
         Intent i=new Intent(MainActivity.this,loginActivity.class);

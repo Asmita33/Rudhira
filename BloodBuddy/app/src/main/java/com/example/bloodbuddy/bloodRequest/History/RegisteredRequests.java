@@ -1,4 +1,4 @@
-package com.example.bloodbuddy.bloodRequest;
+package com.example.bloodbuddy.bloodRequest.History;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
+import com.example.bloodbuddy.Adapers.HistorySeekerAdapter;
 import com.example.bloodbuddy.Adapers.RequestAdapter;
 import com.example.bloodbuddy.Patient;
 import com.example.bloodbuddy.R;
+import com.example.bloodbuddy.bloodRequest.RequestList;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,42 +23,44 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class RequestList extends AppCompatActivity {
+public class RegisteredRequests extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Patient> patientArrayList;
-    RequestAdapter requestAdapter;
+    HistorySeekerAdapter historySeekerAdapter;
     FirebaseFirestore db;
     ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request_list);
+        setContentView(R.layout.activity_registered_requests);
 
         //Progress Bar while loading request list
-        progressDialog = new ProgressDialog(RequestList.this);
+        progressDialog = new ProgressDialog(RegisteredRequests.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching data");
         progressDialog.show();
 
-
-        recyclerView=findViewById(R.id.recyclerView_user);;
+        recyclerView=findViewById(R.id.recyclerView);;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(RequestList.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(RegisteredRequests.this));
 
         db = FirebaseFirestore.getInstance();
         patientArrayList = new ArrayList<Patient>();
-        requestAdapter = new RequestAdapter(RequestList.this,patientArrayList,
-                false,true);
-        recyclerView.setAdapter(requestAdapter);
+        historySeekerAdapter = new HistorySeekerAdapter(RegisteredRequests.this,
+                patientArrayList);
+        recyclerView.setAdapter(historySeekerAdapter);
 
-        //Method to load request
-        loadRequest();
+
+
+        //Method to load history
+        loadHistory();
 
 
     }
 
-    private void loadRequest() {
-        db.collection("Request").orderBy("condition", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+    private void loadHistory()
+    {
+        db.collection("History").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error!=null)
@@ -70,17 +72,15 @@ public class RequestList extends AppCompatActivity {
                 }
                 for(DocumentChange dc: value.getDocumentChanges())
                 {
-                    String isGenuine=dc.getDocument().getString("isValid");
 
                     {
                         if(dc.getType() == DocumentChange.Type.ADDED)
                         {
-                            if(isGenuine.equals("true"))
-                            patientArrayList.add(dc.getDocument().toObject(Patient.class));
+                                patientArrayList.add(dc.getDocument().toObject(Patient.class));
                         }
 
 
-                        requestAdapter.notifyDataSetChanged();
+                        historySeekerAdapter.notifyDataSetChanged();
                     }
 
                     if(progressDialog.isShowing())
