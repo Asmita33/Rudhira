@@ -13,6 +13,15 @@ public class Patient {
     private String condition;
     private String pdfUrl;
     private String isValid="false";
+    private String received="false";
+
+    public String getReceived() {
+        return received;
+    }
+
+    public void setReceived(String received) {
+        this.received = received;
+    }
 
     public Patient() {
     }
