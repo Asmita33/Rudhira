@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".bloodRequest.RequestDetailAdmin">
+    tools:context=".bloodRequest.DonateBlood">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInput_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -27,7 +27,6 @@
                 android:id="@+id/user_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
                 android:cursorVisible="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -47,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:editable="false"
                 android:textSize="14dp"  />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -66,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:editable="false"
+                android:inputType="number"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -86,25 +84,24 @@
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
                 android:inputType="number"
-                android:editable="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInput_bloodGrp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/blood_group"
             app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/bloodGrp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:editable="false"
+                android:layout_weight="1"
                 android:textSize="14dp"
                 android:inputType="none"/>
 
@@ -127,7 +124,6 @@
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
                 android:inputType="number"
-                android:editable="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -145,25 +141,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:editable="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInput_condition"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/condition"
             app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:editable="false"
+                android:layout_weight="1"
                 android:textSize="14dp"
                 android:inputType="none"/>
 
@@ -190,61 +185,18 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/admin_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <Button
-                android:id="@+id/accept_request"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_bg"
-                android:text="@string/mark_as_genuine"
-                android:textColor="@color/white"
-                android:textSize="11dp"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:textStyle="bold"
-                android:layout_width="0dp" />
-
-            <Button
-                android:id="@+id/delete_request"
-                android:layout_weight="1"
-                android:width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_bg"
-                android:text="@string/delete_request"
-                android:textColor="@color/white"
-                android:textSize="11dp"
-                android:textStyle="bold"
-                android:layout_width="0dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
             android:layout_margin="15dp"
-            android:id="@+id/user_layout"
+            android:id="@+id/ask_to_donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            android:textStyle="bold"
             android:layout_weight="1"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:text="@string/ask_to_donate" />
 
-            <Button
-                android:id="@+id/donate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_bg"
-                android:textColor="@color/white"
-                android:textSize="11dp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:text="@string/donate" />
-        </LinearLayout>
+
     </LinearLayout>
-
-
 </ScrollView>

@@ -14,6 +14,46 @@ public class Patient {
     private String pdfUrl;
     private String isValid="false";
     private String received="false";
+    private String donated="false";
+    private String donateTo;
+
+    public String getSeekerBloodGrp() {
+        return seekerBloodGrp;
+    }
+
+    public void setSeekerBloodGrp(String seekerBloodGrp) {
+        this.seekerBloodGrp = seekerBloodGrp;
+    }
+
+    private String seekerBloodGrp;
+    private String seekerContact;
+
+    public String getSeekerContact() {
+        return seekerContact;
+    }
+
+    public void setSeekerContact(String seekerContact) {
+        this.seekerContact = seekerContact;
+    }
+
+
+    public String getDonated() {
+        return donated;
+    }
+
+    public void setDonated(String donated) {
+        this.donated = donated;
+    }
+
+    public String getDonateTo() {
+        return donateTo;
+    }
+
+    public void setDonateTo(String donateTo) {
+        this.donateTo = donateTo;
+    }
+
+
 
     public String getReceived() {
         return received;

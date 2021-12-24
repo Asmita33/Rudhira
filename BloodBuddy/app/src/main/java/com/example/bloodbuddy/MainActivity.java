@@ -246,11 +246,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sendToLogin();
                 break;
             case R.id.my_request: displayRequest();
-
+                break;
+            case R.id.history: displayHistory();
                 break;
 
         }
         return true;
+    }
+
+    private void displayHistory() {
+        Intent i= new Intent(MainActivity.this,History.class);
+        startActivity(i);
     }
 
     private void displayRequest() {

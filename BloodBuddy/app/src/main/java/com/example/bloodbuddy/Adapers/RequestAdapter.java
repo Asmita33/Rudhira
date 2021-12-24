@@ -51,9 +51,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 Intent i;
 
                 i =new Intent(context, RequestDetailAdmin.class);
+                i.putExtra("parent","admin");
                 if(isUser)
-                i=new Intent(context, RequestDetailUser.class);
-
+                i.putExtra("parent","user");
                 i.putExtra("mobile",patient.getMobile());
               // Toast.makeText(context,patient.getMobile().toString(),Toast.LENGTH_LONG).show();
                 context.startActivity(i);

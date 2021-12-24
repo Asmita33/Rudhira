@@ -38,10 +38,10 @@ public class UserProfile extends AppCompatActivity implements DatePickerDialog.O
     private static final int PICK_IMAGE_REQUEST=1;//To identify our image request
     private FirebaseAuth auth;
     private Uri imageUri;
-    Users user=new Users();
+    private Users user=new Users();
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
-    FirebaseStorage storage;
+    private FirebaseStorage storage;
     private DocumentReference ref;
 
     @Override

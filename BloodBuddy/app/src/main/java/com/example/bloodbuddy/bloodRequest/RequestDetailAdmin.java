@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RequestDetailAdmin extends AppCompatActivity {
 
     ActivityRequestDetailAdminBinding activityRequestAdminBinding;
-    String number;
+    private String number,parent;
     private FirebaseFirestore db;
     private DocumentReference ref;
     Patient patient=new Patient();
@@ -39,10 +39,18 @@ public class RequestDetailAdmin extends AppCompatActivity {
         View view=activityRequestAdminBinding.getRoot();
         setContentView(view);
 
-
+        parent=getIntent().getStringExtra("parent");
         number=getIntent().getStringExtra("mobile");
         db=FirebaseFirestore.getInstance();
         ref=db.collection("Request").document("+91"+number);
+
+
+        //If parent activity is from user
+        if(parent.equals("user"))
+        {
+            activityRequestAdminBinding.adminLayout.setVisibility(View.GONE);
+            activityRequestAdminBinding.userLayout.setVisibility(View.VISIBLE);
+        }
 
         //Fetching patient details from firebase
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -94,6 +102,17 @@ public class RequestDetailAdmin extends AppCompatActivity {
                  });
             // Message to user on acceptance of request
 
+            }
+        });
+
+        //Asking for Donation
+        activityRequestAdminBinding.donate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Intent i= new Intent(RequestDetailAdmin.this,DonateBlood.class);
+                 i.putExtra("name",patient.getName());
+                 i.putExtra("number",patient.getMobile());
+                 startActivity(i);
             }
         });
 

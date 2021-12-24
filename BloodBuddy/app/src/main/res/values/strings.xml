@@ -48,6 +48,9 @@
     <string name="donors">Donors</string>
     <string name="status">Status:</string>
     <string name="blood_required">Blood Group Required</string>
+    <string name="history">History</string>
+    <string name="donate">Donate</string>
+    <string name="ask_to_donate">Ask to donate</string>
 
     <string-array name="blood_grps">
         <item>O +ve</item>
