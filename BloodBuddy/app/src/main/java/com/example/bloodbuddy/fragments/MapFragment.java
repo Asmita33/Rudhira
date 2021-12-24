@@ -1,26 +1,38 @@
 package com.example.bloodbuddy.fragments;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.bloodbuddy.MapSearchActivity;
 import com.example.bloodbuddy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mapbox.android.core.permissions.PermissionsListener;
+import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.MapView;
+import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
+//import com.mapbox.maps.
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements LocationListener, PermissionsListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +45,15 @@ public class MapFragment extends Fragment {
 
     private MapView mapview;
     FloatingActionButton mapfab;
+
+    private MapboxMap mapboxMap;
+    private PermissionsManager permissionsManager;
+//    private LocationEngine locationEngine;
+//    private LocationLayerPlugin; deprecated
+    private LocationComponentPlugin locationComponentPlugin;
+    private Location originLocation;
+
+
 
     public MapFragment() {
         // Required empty public constructor
@@ -72,7 +93,14 @@ public class MapFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapview = view.findViewById(R.id.mapView);
-        mapview.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS);
+
+        mapview.getMapboxMap().setCamera(new CameraOptions.Builder().zoom(14.0).build());
+        mapview.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                enableLocationComponent(style);
+            }
+        });
 
         mapfab = view.findViewById(R.id.map_fab);
         mapfab.setOnClickListener(new View.OnClickListener() {
@@ -83,19 +111,53 @@ public class MapFragment extends Fragment {
             }
         });
 
+//        enableLocationPermission();
+//        initLocationComponent();
+//        setupGesturesListener();
+        mapboxMap = mapview.getMapboxMap();
+
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mapview.onStart();
+    private void enableLocationComponent(Style loadedMapStyle)
+    {
+        if(PermissionsManager.areLocationPermissionsGranted(getContext())){
+//            locationComponentPlugin = mapboxM
+        }
     }
-//    onSta
+
+
+
+    private void enableLocationPermission() {
+        if(PermissionsManager.areLocationPermissionsGranted(getContext())){
+            // we have the permission
+        }
+        else{
+            permissionsManager = new PermissionsManager(this);
+            permissionsManager.requestLocationPermissions(getActivity());
+        }
+
+    }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        mapview.onStop();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    // why we need access
+    @Override
+    public void onExplanationNeeded(List<String> list) {
+        Toast.makeText(getContext(), "We need this permission to show your location", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+        if(granted)
+            enableLocationPermission();
     }
 }

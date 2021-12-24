@@ -3,12 +3,14 @@ package com.example.bloodbuddy.adminFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bloodbuddy.R;
+import com.example.bloodbuddy.fragments.FeedFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +63,8 @@ public class Updates extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        getChildFragmentManager().beginTransaction().add(R.id.admin_updates_fragment, new FeedFragment()).commit();
         return inflater.inflate(R.layout.fragment_updates, container, false);
     }
 }

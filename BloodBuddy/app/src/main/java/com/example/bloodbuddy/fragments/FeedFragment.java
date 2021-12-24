@@ -3,12 +3,18 @@ package com.example.bloodbuddy.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bloodbuddy.Adapers.FeedAdapter;
 import com.example.bloodbuddy.R;
+import com.example.bloodbuddy.modelClasses.Feed;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +31,10 @@ public class FeedFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    // create  vars
+    RecyclerView recyclerView;
+    ArrayList<Feed> feedList;
+
 
     public FeedFragment() {
         // Required empty public constructor
@@ -61,6 +71,19 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);
+
+        // binding
+        feedList = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.feedRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //HERE: create/fetch the data here
+        feedList.add(new Feed("This post describes a solution to a problem we ran into with communication between Fragments and Activities, which involved logic in our Activities that we wanted to extract. It happened specifically in the case of accessing an Activity’s ViewModel from a Fragment which was used in multiple Activities, each with their own ViewModel.",
+                R.drawable.chat3, ""));
+
+        recyclerView.setAdapter(new FeedAdapter(getContext(), feedList));
+
+        return view;
     }
 }
