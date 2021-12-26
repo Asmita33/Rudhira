@@ -128,7 +128,7 @@ public class FeedFragment extends Fragment {
                     feedAdapter.notifyDataSetChanged();
                 } else {
                     // if the snapshot is empty we are displaying a toast message.
-                    Toast.makeText(getContext(), "No data found in Database", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getContext(), "No data found in Database", Toast.LENGTH_SHORT).show();
                 }
 
             }

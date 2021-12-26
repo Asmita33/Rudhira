@@ -87,14 +87,31 @@ public class UserProfile extends AppCompatActivity implements DatePickerDialog.O
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         user.setImgUri(uri.toString());
-                                        Toast.makeText(UserProfile.this,"Here",Toast.LENGTH_LONG).show();
+                                        if(activityUserProfileBinding.userEmail.getText().toString().equals(""))
+                                        {
+                                            Toast.makeText(UserProfile.this,"User Name cannot be empty",Toast.LENGTH_LONG).show();
+                                        }
+                                        else
+                                            db.collection("Users").document(currentUser.getPhoneNumber()).set(user).
+                                                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+                                                            Toast.makeText(UserProfile.this,"Changes Updated",Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(UserProfile.this,"Error in updating changes, try after some time",Toast.LENGTH_LONG).show();
+                                                }
+                                            });
                                     }
                                 });
                             }
                         }
                     });
                 }
-
+                else
                 if(activityUserProfileBinding.userEmail.getText().toString().equals(""))
                 {
                     Toast.makeText(UserProfile.this,"User Name cannot be empty",Toast.LENGTH_LONG).show();

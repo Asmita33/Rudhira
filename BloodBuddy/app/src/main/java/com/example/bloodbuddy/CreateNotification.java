@@ -44,7 +44,7 @@ public class CreateNotification extends AppCompatActivity {
 
         Log.d("test", "test again");
         Log.d("msg1","check " + binding.headingNotification.getText().toString());
-        Toast.makeText(CreateNotification.this, "\"check \" + binding.headingNotification.getText().toString()", Toast.LENGTH_LONG).show();
+
 
         // update notification to firebase database and send to all users
         binding.pushNotification.setOnClickListener(new View.OnClickListener() {

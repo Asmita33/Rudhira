@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".adminFragments.History">
 
 
@@ -13,6 +14,17 @@
         android:padding="40dp"
         android:orientation="vertical">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            android:id="@+id/lottie"
+            android:elevation="5dp"
+            app:lottie_rawRes="@raw/iconanimation">
+
+        </com.airbnb.lottie.LottieAnimationView>
+        
         <Button
             android:id="@+id/registered_request"
             android:layout_width="match_parent"

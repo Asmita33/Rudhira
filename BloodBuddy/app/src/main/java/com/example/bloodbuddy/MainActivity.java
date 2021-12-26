@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //loads profile pic fast
+        //loads profile pic
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // added all the icons of all fragments
         bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_map_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_notification));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_baseline_select_all_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_icons8_drop_of_blood_48__1_));
         bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_notification));
         bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_baseline_chat_24));
