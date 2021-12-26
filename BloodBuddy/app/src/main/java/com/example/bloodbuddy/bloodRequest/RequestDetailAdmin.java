@@ -3,11 +3,16 @@ package com.example.bloodbuddy.bloodRequest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -163,15 +168,24 @@ public class RequestDetailAdmin extends AppCompatActivity {
                              notification.setMsg2(msg2);
                              notification.setMsg3(msg3);
 
+                             //message to seaker
+                             if(ContextCompat.checkSelfPermission(RequestDetailAdmin.this, Manifest.permission.SEND_SMS)
+                                     == PackageManager.PERMISSION_GRANTED) {
+                                 //when permission is granted, create method
+                                 String messg= "Your request has been verified! "+"We'll contact you soon.";
+                                 sendMessage(patient.getMobile(), messg);
+                             }else{
+                                 ActivityCompat.requestPermissions(RequestDetailAdmin.this
+                                         , new String[] {Manifest.permission.SEND_SMS}
+                                         , 100);
+                             }
+
                              mDatabase.child("Notifications").child(patient.getMobile())
                                      .push().setValue(notification);//push for generation unique id
                          }
 
                      }
                  });
-
-
-            // Message to user on acceptance of request
 
 
             }
@@ -193,6 +207,12 @@ public class RequestDetailAdmin extends AppCompatActivity {
         activityRequestAdminBinding.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent= new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain"); //the type of message which we are sharing
+                //String mess= "https://play.google.com/store/apps/details?="+BuildConfig.APPLICATION_ID+"\n\n";
+                intent.putExtra(Intent.EXTRA_TEXT,  "Hey! I found this blood request on Rudhira App. A Patient, " +
+                        patient.getName()+", is in "+patient.getCondition()+" condition"+" and needs "+patient.getBloodGrp()+" group blood urgently.\n\n"+"You can " +
+                        "donate blood by visiting at "+patient.getLocation()+". For more information about patient, Contact: "+patient.getMobile()+".\n\nNote:\nAnyone between 18 and 65 years of age and in normal health can donate blood.");
 
             }
         });
@@ -214,10 +234,11 @@ public class RequestDetailAdmin extends AppCompatActivity {
                     public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
                           pdf=documentSnapshot.getString("pdfUrl");
 
-                    }
-                });
+                Intent chooser = Intent.createChooser(intent, "Share via");
+                startActivity(chooser);
             }
         });
+
         //Deleting Request
         activityRequestAdminBinding.deleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,5 +299,11 @@ public class RequestDetailAdmin extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void sendMessage(String destinationNo, String messg) {
+        SmsManager smsManager= SmsManager.getDefault();
+        smsManager.sendTextMessage(destinationNo, null, messg, null, null);
+        Toast.makeText(getApplicationContext(), "SMS sent Successfully to the user!", Toast.LENGTH_LONG).show();
     }
 }
