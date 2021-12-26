@@ -66,5 +66,10 @@
     <string name="history">इतिहास</string>
     <string name="donate">दान करना</string>
     <string name="ask_to_donate">दान करने के लिए कहें</string>
+    <string name="searched_list">खोजी गई सूची</string>
+    <string name="notify">सूचित करें</string>
+    <string name="push_notification">सर्वर पुश नोटीफिकेशन</string>
+    <string name="update_feed">फ़ीड अपडेट करें</string>
+    <string name="upload_image">तस्वीर डालिये</string>
 
 </resources>
