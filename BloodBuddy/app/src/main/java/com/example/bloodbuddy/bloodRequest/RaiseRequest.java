@@ -238,17 +238,19 @@ public class RaiseRequest extends AppCompatActivity {
                                  patient.setPdfUrl(uri1.toString());
                                  Toast.makeText(RaiseRequest.this, uri1.toString(),
                                          Toast.LENGTH_LONG).show();
+
+                                 firestore.collection("Request").document(currentUser.getPhoneNumber()).
+                                         set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                     @Override
+                                     public void onSuccess(@NonNull Void aVoid) {
+                                         Toast.makeText(RaiseRequest.this, "Request Registered",
+                                                 Toast.LENGTH_LONG).show();
+                                     }
+                                 });
+
                              }
                          });
                      }
-                    firestore.collection("Request").document(currentUser.getPhoneNumber().toString()).
-                            set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(@NonNull Void aVoid) {
-                            Toast.makeText(RaiseRequest.this, "Request Registered",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
 
 
                 //to send notification to the admin
@@ -407,6 +409,7 @@ public class RaiseRequest extends AppCompatActivity {
         {
             activityRaiseRequestBinding.userDocument.setText(data.getDataString().substring(data.getDataString().lastIndexOf("/")+1));
             uri=data.getData();
+            Toast.makeText(RaiseRequest.this, uri.toString(), Toast.LENGTH_SHORT).show();
         }
 
     }

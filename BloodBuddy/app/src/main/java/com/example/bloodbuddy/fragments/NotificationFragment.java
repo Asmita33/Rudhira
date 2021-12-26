@@ -1,5 +1,6 @@
 package com.example.bloodbuddy.fragments;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
@@ -24,8 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NotificationFragment extends Fragment {
 
@@ -111,6 +114,7 @@ public class NotificationFragment extends Fragment {
                        progressDialog.dismiss();
                }
                progressDialog.dismiss();
+               Collections.reverse(arrayList);
                notificationAdapter.notifyDataSetChanged();
            }
 

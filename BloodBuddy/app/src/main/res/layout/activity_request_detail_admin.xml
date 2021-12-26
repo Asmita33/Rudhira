@@ -80,7 +80,7 @@
             app:endIconMode="custom"
 
             app:suffixText="Years"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_nature_people_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_age"
@@ -121,7 +121,7 @@
             android:hint="@string/amount"
             android:editable="false"
             app:endIconMode="custom"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_local_drink_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_amount"
@@ -140,7 +140,7 @@
             android:editable="false"
             android:hint="@string/location"
             app:endIconMode="custom"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_home_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_location"
@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/condition"
-            app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
+            app:startIconDrawable="@drawable/ic_baseline_hotel_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/condition"
@@ -177,16 +177,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/document"
             app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_baseline_cloud_upload_24"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_attachment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_document"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
+                android:textStyle="bold"
+                android:text="@string/document"
                 android:editable="false"
                 android:textSize="14dp" />
 

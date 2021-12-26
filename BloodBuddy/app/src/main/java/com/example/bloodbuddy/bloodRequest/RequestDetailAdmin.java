@@ -27,6 +27,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 public class RequestDetailAdmin extends AppCompatActivity {
 
     ActivityRequestDetailAdminBinding activityRequestAdminBinding;
@@ -35,7 +37,8 @@ public class RequestDetailAdmin extends AppCompatActivity {
     private DocumentReference ref;
     static  Patient patient=new Patient();
     private DatabaseReference mDatabase;;
-
+    private Date date = new Date();
+    private String pdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,12 +110,14 @@ public class RequestDetailAdmin extends AppCompatActivity {
             }
         });
 
-        //Marking request as genuine
+        //*********************************Marking request as genuine
         activityRequestAdminBinding.acceptRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                  patient.setIsValid("true");
+
+
                  db.collection(request).document(patient.getMobile())
                          .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
@@ -133,18 +138,19 @@ public class RequestDetailAdmin extends AppCompatActivity {
                              notification.setMsg3(msg3);
 
                              mDatabase.child("Notifications").child(patient.getMobile())
-                                     .push().setValue(notification);//push for generation unique id
+                                     .child( String.valueOf(date.getTime()) ).setValue(notification);//push for generation unique id
 
                              msg1="One of our verified users wants to donate blood to you";
                              msg2="Name of Donor: "+patient.getName();
-                             msg3="Number: "+patient.getMobile()+" Email: "+patient.getEmail();
+                             msg3="Number: "+patient.getMobile()+" Email: "+patient.getEmail()+
+                                     "\nThey will contact you soon.";
 
                              notification.setMsg1(msg1);
                              notification.setMsg2(msg2);
                              notification.setMsg3(msg3);
 
                              mDatabase.child("Notifications").child(patient.getSeekerContact()).
-                                     push().setValue(notification);
+                                     child( String.valueOf(date.getTime()) ).setValue(notification);
 
                          }
                          else
@@ -162,7 +168,10 @@ public class RequestDetailAdmin extends AppCompatActivity {
 
                      }
                  });
+
+
             // Message to user on acceptance of request
+
 
             }
         });
@@ -184,6 +193,20 @@ public class RequestDetailAdmin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        //View document
+        activityRequestAdminBinding.txtInputDocument.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
+                          pdf=documentSnapshot.getString("pdfUrl");
+
+                    }
+                });
             }
         });
         //Deleting Request
