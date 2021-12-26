@@ -57,5 +57,14 @@
         <item>उदारवादी</item>
         <item>हल्का</item>
     </string-array>
+    <string name="cool_down">शांत हो जाओ</string>
+    <string name="seekers">चाहने वालों</string>
+    <string name="registered_requests">पंजीकृत अनुरोध</string>
+    <string name="donors">दाताओं</string>
+    <string name="status">स्थिति:</string>
+    <string name="blood_required">ब्लड ग्रुप की आवश्यकता</string>
+    <string name="history">इतिहास</string>
+    <string name="donate">दान करना</string>
+    <string name="ask_to_donate">दान करने के लिए कहें</string>
 
 </resources>
