@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -109,10 +111,42 @@ public class ChatFragment extends Fragment {
 
                 for(DataSnapshot snapshot1 : snapshot.getChildren())
                 {
-                    Users user = snapshot1.getValue(Users.class);
-                    usersList.add(user);
+                    Users user = snapshot1.getValue(Users.class); // current_asmita
+                    String neededRoom = currentUser.getPhoneNumber()+ "_" +user.getMobile();
+
+                    // -----> check if chat already exists
+                    firebaseDatabase.getReference().child("chats").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot chatSnapshot) {
+                            for(DataSnapshot snap1 : chatSnapshot.getChildren())
+                            {
+//                                String chatNumber = snap1.getKey().substring(15);
+//                                if(chatNumber.equals( user.getMobile() ))
+//                                    usersList.add(user);
+                                String room = snap1.getKey();
+//                                Log.d("room", room);
+//                                Log.d("needed Room", neededRoom);
+
+                                if( room.equals(neededRoom) ) {
+                                    usersList.add(user);
+                                    rvAdapter.notifyDataSetChanged();
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+//                     ----->
+
+
+//                    if(user.getMobile().equals("+917424962450"))
+//                    usersList.add(user);
                 }
-                rvAdapter.notifyDataSetChanged();
+//                rvAdapter.notifyDataSetChanged();
 
             }
 
