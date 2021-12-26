@@ -41,7 +41,7 @@ public class DonateBlood extends AppCompatActivity {
     private DocumentReference ref;
     private Patient patient=new Patient();
     private Uri uri;
-    private String seekerName,seekerNumber;
+    private String seekerName,seekerNumber,seekerBloodGrp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,8 @@ public class DonateBlood extends AppCompatActivity {
 
         seekerName=getIntent().getStringExtra("name");
         seekerNumber=getIntent().getStringExtra("number");
+        seekerBloodGrp=getIntent().getStringExtra("blood");
+
         Toast.makeText(DonateBlood.this,seekerName+" "+seekerNumber,Toast.LENGTH_LONG).show();
         //For loading blood groups
         String bloodGrp[]=getResources().getStringArray(R.array.blood_grps);
@@ -124,6 +126,7 @@ public class DonateBlood extends AppCompatActivity {
                 patient.setCondition(activityDonateBloodBinding.condition.getText().toString());
                 patient.setDonateTo(seekerName);
                 patient.setSeekerContact(seekerNumber);
+                patient.setSeekerBloodGrp(seekerBloodGrp);
                 if(uri!=null)
                 {
                     storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

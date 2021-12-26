@@ -1,6 +1,7 @@
 package com.example.bloodbuddy.Adapers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bloodbuddy.Patient;
 import com.example.bloodbuddy.R;
+import com.example.bloodbuddy.bloodRequest.RequestDetailAdmin;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,20 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
         holder.patientName.setText(patient.getDonateTo());
         holder.patientNumber.setText(patient.getSeekerContact());
         holder.bloodGrp.setText(patient.getSeekerBloodGrp());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i;
+
+                i =new Intent(context, RequestDetailAdmin.class);
+                i.putExtra("parent","admin");
+                i.putExtra("person","donor");
+                i.putExtra("mobile",patient.getMobile());
+                context.startActivity(i);
+            }
+        });
+
     }
 
     @Override

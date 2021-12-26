@@ -72,6 +72,27 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInput_search"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:endIconMode="custom"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            app:endIconDrawable="@drawable/ic_baseline_search_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:hint="Search"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <FrameLayout
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"

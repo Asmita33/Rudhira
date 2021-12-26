@@ -117,6 +117,7 @@ public class VerifyRequests extends Fragment {
                     if(progressDialog.isShowing())
                         progressDialog.dismiss();
                 }
+                progressDialog.dismiss();
             }
         });
     }
