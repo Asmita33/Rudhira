@@ -132,6 +132,9 @@ public class AdminMainActivity extends AppCompatActivity implements NavigationVi
                 sendToLogin();
                 break;
 
+            case R.id.notify:
+                startActivity(new Intent(AdminMainActivity.this, CreateNotification.class));
+
         }
         return true;
     }
