@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
+                android:inputType="none"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,6 +45,7 @@
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="none"
                 android:cursorVisible="false"
                 android:textSize="14dp"  />
         </com.google.android.material.textfield.TextInputLayout>
@@ -54,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/number"
-            app:prefixText="+91"
             app:endIconMode="custom"
             app:startIconDrawable="@drawable/ic_baseline_call_24">
 
@@ -63,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:inputType="number"
+                android:inputType="none"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -75,7 +76,7 @@
             android:hint="@string/age"
             app:endIconMode="custom"
             app:suffixText="Years"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_nature_people_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_age"
@@ -115,7 +116,7 @@
             app:suffixText="Liters"
             android:hint="@string/amount"
             app:endIconMode="custom"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_local_drink_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_amount"
@@ -133,7 +134,7 @@
             android:layout_marginTop="20dp"
             android:hint="@string/location"
             app:endIconMode="custom"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_baseline_home_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_location"
@@ -150,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/condition"
-            app:startIconDrawable="@drawable/ic_icons8_drop_of_blood_48__1_">
+            app:startIconDrawable="@drawable/ic_baseline_hotel_24">
 
             <AutoCompleteTextView
                 android:id="@+id/condition"
@@ -172,7 +173,7 @@
             android:hint="@string/document"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_baseline_cloud_upload_24"
-            app:startIconDrawable="@drawable/ic_baseline_call_24">
+            app:startIconDrawable="@drawable/ic_attachment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/user_document"

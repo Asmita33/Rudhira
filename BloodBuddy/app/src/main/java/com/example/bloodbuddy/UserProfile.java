@@ -95,6 +95,11 @@ public class UserProfile extends AppCompatActivity implements DatePickerDialog.O
                     });
                 }
 
+                if(activityUserProfileBinding.userEmail.getText().toString().equals(""))
+                {
+                    Toast.makeText(UserProfile.this,"User Name cannot be empty",Toast.LENGTH_LONG).show();
+                }
+                else
                 db.collection("Users").document(currentUser.getPhoneNumber()).set(user).
                         addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

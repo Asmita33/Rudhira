@@ -156,6 +156,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search.setCursorVisible(true);
+            }
+        });
+
         //loads profile pic fast
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

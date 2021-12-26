@@ -26,6 +26,7 @@ import com.example.bloodbuddy.MainActivity;
 import com.example.bloodbuddy.Patient;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.UserProfile;
+import com.example.bloodbuddy.Users;
 import com.example.bloodbuddy.databinding.ActivityRaiseRequestBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,7 +48,7 @@ public class RaiseRequest extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
     private StorageReference storageReference;
-    private DocumentReference documentReference,documentReference1;
+    private DocumentReference documentReference,documentReference1,db;
     private FirebaseFirestore firestore;
     private FirebaseStorage storage;
     private Uri uri;
@@ -64,6 +65,7 @@ public class RaiseRequest extends AppCompatActivity {
         firestore=FirebaseFirestore.getInstance();
         documentReference=firestore.collection("BloodRequests").document(currentUser.getPhoneNumber());
         documentReference1=firestore.collection("Request").document(currentUser.getPhoneNumber());
+        db=firestore.collection("Users").document(currentUser.getPhoneNumber());
         storage =FirebaseStorage.getInstance();
         storageReference =storage.getReference()
                 .child("Documents").child(auth.getCurrentUser().getPhoneNumber());
@@ -109,6 +111,70 @@ public class RaiseRequest extends AppCompatActivity {
                 }
             });
         }
+        else
+        {
+            db.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists())
+                    {
+                        Users user1=new Users();
+                        user1.setName(documentSnapshot.getString("name"));
+                        user1.setEmail(documentSnapshot.getString("email"));
+                        user1.setMobile(documentSnapshot.getString("mobile"));
+                        activityRaiseRequestBinding.userNameInput.setText(user1.getName());
+                        activityRaiseRequestBinding.userEmail.setText(user1.getEmail());
+                        activityRaiseRequestBinding.userNumber.setText(user1.getMobile());
+
+
+                    }
+                }
+            });
+        }
+
+        activityRaiseRequestBinding.userNameInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Toast.makeText(RaiseRequest.this,"Request is registered on user's name, cannot be modified",
+                       Toast.LENGTH_LONG).show();
+            }
+        });
+
+        activityRaiseRequestBinding.userEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RaiseRequest.this,"Cannot be modified",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        activityRaiseRequestBinding.userNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RaiseRequest.this,"Cannot be modified",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        activityRaiseRequestBinding.userAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityRaiseRequestBinding.userAmount.setCursorVisible(true);
+            }
+        });
+        activityRaiseRequestBinding.userAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityRaiseRequestBinding.userAge.setCursorVisible(true);
+            }
+        });
+
+        activityRaiseRequestBinding.userLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityRaiseRequestBinding.userLocation.setCursorVisible(true);
+            }
+        });
 
         //For loading blood groups
         String bloodGrp[]=getResources().getStringArray(R.array.blood_grps);
@@ -134,52 +200,68 @@ public class RaiseRequest extends AppCompatActivity {
         activityRaiseRequestBinding.raiseRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                patient.setEmail(activityRaiseRequestBinding.userEmail.getText().toString());
-                patient.setMobile(activityRaiseRequestBinding.userNumber.getText().toString());
-                patient.setName(activityRaiseRequestBinding.userNameInput.getText().toString());
-                patient.setBloodGrp(activityRaiseRequestBinding.bloodGrp.getText().toString());
-                patient.setAge(activityRaiseRequestBinding.userAge.getText().toString());
-                patient.setAmount(activityRaiseRequestBinding.userAmount.getText().toString());
-                patient.setLocation(activityRaiseRequestBinding.userLocation.getText().toString());
-                patient.setCondition(activityRaiseRequestBinding.condition.getText().toString());
-                if(uri!=null)
-                {
-                    storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                if (activityRaiseRequestBinding.userAge.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Complete All fields",Toast.LENGTH_LONG).show();
+                }
+                else if(Integer.parseInt(activityRaiseRequestBinding.userAge.getText().toString())>100)
+                  Toast.makeText(RaiseRequest.this,"Enter valid age",Toast.LENGTH_LONG).show();
+                else if (activityRaiseRequestBinding.bloodGrp.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Complete All fields",Toast.LENGTH_LONG).show();
+                } else if (activityRaiseRequestBinding.userAmount.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Complete All fields",Toast.LENGTH_LONG).show();
+                } else if (activityRaiseRequestBinding.userLocation.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Complete All fields",Toast.LENGTH_LONG).show();
+                } else if (activityRaiseRequestBinding.condition.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Complete All fields",Toast.LENGTH_LONG).show();
+                }
+                else if (activityRaiseRequestBinding.userDocument.getText().toString().equals("")) {
+                    Toast.makeText(RaiseRequest.this,"Upload document",Toast.LENGTH_LONG).show();
+                }
+                else
+                 {
+                     patient.setEmail(activityRaiseRequestBinding.userEmail.getText().toString());
+                     patient.setMobile(activityRaiseRequestBinding.userNumber.getText().toString());
+                     patient.setName(activityRaiseRequestBinding.userNameInput.getText().toString());
+                     patient.setBloodGrp(activityRaiseRequestBinding.bloodGrp.getText().toString());
+                     patient.setAge(activityRaiseRequestBinding.userAge.getText().toString());
+                     patient.setAmount(activityRaiseRequestBinding.userAmount.getText().toString());
+                     patient.setLocation(activityRaiseRequestBinding.userLocation.getText().toString());
+                     patient.setCondition(activityRaiseRequestBinding.condition.getText().toString());
+                    if (uri != null) {
+                         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                             @Override
+                             public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                 while (!uriTask.isComplete()) ;
+                                 Uri uri1 = uriTask.getResult();
+                                 patient.setPdfUrl(uri1.toString());
+                                 Toast.makeText(RaiseRequest.this, uri1.toString(),
+                                         Toast.LENGTH_LONG).show();
+                             }
+                         });
+                     }
+                    firestore.collection("Request").document(currentUser.getPhoneNumber().toString()).
+                            set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
-                            while(!uriTask.isComplete());
-                            Uri uri1=uriTask.getResult();
-                            patient.setPdfUrl(uri1.toString());
-                            Toast.makeText(RaiseRequest.this,uri1.toString(),
+                        public void onSuccess(@NonNull Void aVoid) {
+                            Toast.makeText(RaiseRequest.this, "Request Registered",
                                     Toast.LENGTH_LONG).show();
                         }
                     });
-                }
-
-
-                firestore.collection("Request").document(currentUser.getPhoneNumber().toString()).
-                        set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(@NonNull Void aVoid) {
-                        Toast.makeText(RaiseRequest.this,"Request Registered",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
 
 
                 //to send notification to the admin
-                if(ContextCompat.checkSelfPermission(RaiseRequest.this, Manifest.permission.SEND_SMS)
-                        == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(RaiseRequest.this, Manifest.permission.SEND_SMS)
+                        == PackageManager.PERMISSION_GRANTED) {
                     //when permission is granted, create method
                     sendMessage();
-                }
-                else{
+                } else {
                     ActivityCompat.requestPermissions(RaiseRequest.this
-                            , new String[] {Manifest.permission.SEND_SMS}
+                            , new String[]{Manifest.permission.SEND_SMS}
                             , 100);
                 }
-
+            }
             }
         });
 

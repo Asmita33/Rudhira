@@ -50,14 +50,9 @@
                         android:layout_width="25dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
                         android:background="@drawable/ic_baseline_dehaze_24" />
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_img"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:padding="3dp"
-                        android:background="@drawable/ic_profile" />
+
                     <TextView
                         android:id="@+id/welcome_note"
                         android:layout_width="335dp"
@@ -95,7 +90,7 @@
     <com.google.android.material.navigation.NavigationView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:menu="@menu/navigation_menu"
+        app:menu="@menu/navigation_menu_admin"
         android:layout_gravity="start"
         android:id="@+id/nav_view_side"
         app:headerLayout="@layout/nav_header">
