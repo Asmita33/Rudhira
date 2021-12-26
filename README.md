@@ -48,5 +48,5 @@ Rudhira is a Social Service App to connect blood donors and seekers through an e
 - Ayushwant Gaurav (20195024, ECE)
 - Anchal Yadav (20198071, IT)
 
-
+![main](https://user-images.githubusercontent.com/59894659/147417556-8ea35deb-540d-4005-b779-7b9fe5b08b18.jpeg)
 
