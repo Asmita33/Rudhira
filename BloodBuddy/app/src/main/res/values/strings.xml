@@ -53,6 +53,9 @@
     <string name="ask_to_donate">Ask to donate</string>
     <string name="searched_list">Searched List</string>
     <string name="notify">Notify</string>
+    <string name="push_notification">Push Notification</string>
+    <string name="update_feed">Update Feed</string>
+    <string name="upload_image">Upload Image</string>
 
     <string-array name="blood_grps">
         <item>O +ve</item>
