@@ -49,4 +49,9 @@
     <string name="history">Histoire</string>
     <string name="donate">Faire un don</string>
     <string name="ask_to_donate">Demander à faire un don</string>
+    <string name="searched_list">Liste recherchée</string>
+    <string name="notify">Notifier</string>
+    <string name="push_notification">Notification push</string>
+    <string name="update_feed">Mettre à jour le flux</string>
+    <string name="upload_image">Télécharger une image</string>
 </resources>

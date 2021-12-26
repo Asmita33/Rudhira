@@ -49,4 +49,9 @@
     <string name="history">வரலாறு</string>
     <string name="donate">தானம் செய்</string>
     <string name="ask_to_donate">நன்கொடை அளிக்கச் சொல்லுங்கள்</string>
+    <string name="searched_list">தேடப்பட்ட பட்டியல்</string>
+    <string name="notify">அறிவிக்கவும்</string>
+    <string name="push_notification">புஷ் அறிவிப்பு</string>
+    <string name="update_feed">ஊட்டத்தைப் புதுப்பிக்கவும்</string>
+    <string name="upload_image">படத்தை பதிவேற்றம் செய்யவும்</string>
 </resources>

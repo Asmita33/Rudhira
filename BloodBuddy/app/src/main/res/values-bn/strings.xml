@@ -49,4 +49,9 @@
     <string name="history">ইতিহাস</string>
     <string name="donate">দান করুন</string>
     <string name="ask_to_donate">দান করতে বলুন</string>
+    <string name="searched_list">অনুসন্ধান করা তালিকা</string>
+    <string name="notify">জ্ঞাপন করা</string>
+    <string name="push_notification">ধাক্কা বিজ্ঞপ্তি</string>
+    <string name="update_feed">ফিড আপডেট করুন</string>
+    <string name="upload_image">চিত্র আপলোড</string>
 </resources>
