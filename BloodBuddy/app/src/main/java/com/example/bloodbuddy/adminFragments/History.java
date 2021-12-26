@@ -22,7 +22,7 @@ public class History extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button donors,registeredRequests;
+    private Button registeredRequests;
 
     public History() {
         // Required empty public constructor
@@ -51,17 +51,10 @@ public class History extends Fragment {
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_history, container, false);
-        donors=v.findViewById(R.id.donors);
+
         registeredRequests=v.findViewById(R.id.registered_request);
 
-        //Intent to donors history activity
-        donors.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                        Intent i=new Intent(getContext(),Donors.class);
-                        startActivity(i);
-            }
-        });
+
         //Intent to registered request activity
         registeredRequests.setOnClickListener(new View.OnClickListener() {
             @Override

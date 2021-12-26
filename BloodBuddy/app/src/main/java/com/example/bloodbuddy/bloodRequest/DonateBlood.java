@@ -53,7 +53,7 @@ public class DonateBlood extends AppCompatActivity {
         seekerNumber=getIntent().getStringExtra("number");
         seekerBloodGrp=getIntent().getStringExtra("blood");
 
-        Toast.makeText(DonateBlood.this,seekerName+" "+seekerNumber,Toast.LENGTH_LONG).show();
+
         //For loading blood groups
         String bloodGrp[]=getResources().getStringArray(R.array.blood_grps);
         ArrayAdapter arrayAdapter= new ArrayAdapter(this,R.layout.dropdown_blood_grp,R.id.textView,bloodGrp);
@@ -88,7 +88,7 @@ public class DonateBlood extends AppCompatActivity {
                     user.setAddress(documentSnapshot.getString("address"));
 
                     activityDonateBloodBinding.userNameInput.setText(user.getName());
-                    activityDonateBloodBinding.userNumber.setText(user.getMobile().substring(3));
+                    activityDonateBloodBinding.userNumber.setText(user.getMobile());
                     activityDonateBloodBinding.userEmail.setText(user.getEmail());
                     activityDonateBloodBinding.bloodGrp.setText(user.getBloodGrp());
                     activityDonateBloodBinding.userLocation.setText(user.getAddress());

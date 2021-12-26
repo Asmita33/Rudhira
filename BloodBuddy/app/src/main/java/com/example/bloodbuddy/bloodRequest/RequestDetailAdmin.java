@@ -53,7 +53,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
         }
 
         db=FirebaseFirestore.getInstance();
-        ref=db.collection(request).document("+91"+number);
+        ref=db.collection(request).document(number);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //If parent activity is from user
@@ -113,7 +113,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
             public void onClick(View v) {
 
                  patient.setIsValid("true");
-                 db.collection(request).document("+91"+patient.getMobile())
+                 db.collection(request).document(patient.getMobile())
                          .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
                      public void onSuccess(@NonNull Void aVoid) {
@@ -132,7 +132,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                              notification.setMsg2(msg2);
                              notification.setMsg3(msg3);
 
-                             mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                             mDatabase.child("Notifications").child(patient.getMobile())
                                      .push().setValue(notification);//push for generation unique id
 
                              msg1="One of our verified users wants to donate blood to you";
@@ -143,7 +143,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                              notification.setMsg2(msg2);
                              notification.setMsg3(msg3);
 
-                             mDatabase.child("Notifications").child("+91"+patient.getSeekerContact()).
+                             mDatabase.child("Notifications").child(patient.getSeekerContact()).
                                      push().setValue(notification);
 
                          }
@@ -156,7 +156,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                              notification.setMsg2(msg2);
                              notification.setMsg3(msg3);
 
-                             mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                             mDatabase.child("Notifications").child(patient.getMobile())
                                      .push().setValue(notification);//push for generation unique id
                          }
 
@@ -179,6 +179,13 @@ public class RequestDetailAdmin extends AppCompatActivity {
             }
         });
 
+        //Share
+        activityRequestAdminBinding.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         //Deleting Request
         activityRequestAdminBinding.deleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +196,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            db.collection(request).document("+91"+patient.getMobile()).delete()
+                            db.collection(request).document(patient.getMobile()).delete()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -205,7 +212,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                                                     notification.setMsg2(msg2);
                                                     notification.setMsg3(msg3);
 
-                                                    mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                                    mDatabase.child("Notifications").child(patient.getMobile())
                                                             .push().setValue(notification);//push for generation unique id
                                                 }
                                                 else
@@ -217,7 +224,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                                                     notification.setMsg1(msg1);
                                                     notification.setMsg2(msg2);
                                                     notification.setMsg3(msg3);
-                                                    mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                                    mDatabase.child("Notifications").child(patient.getMobile())
                                                             .push().setValue(notification);//push for generation unique id
                                                 }
                                                 Intent i=new Intent(RequestDetailAdmin.this, AdminMainActivity.class);

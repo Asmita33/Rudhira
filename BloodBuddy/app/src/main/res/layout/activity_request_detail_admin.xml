@@ -13,6 +13,8 @@
         android:orientation="vertical"
         android:paddingRight="20dp"
         android:paddingLeft="20dp">
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtInput_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -57,7 +59,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="@string/number"
-            app:prefixText="+91"
             app:endIconMode="custom"
             app:startIconDrawable="@drawable/ic_baseline_call_24">
 
@@ -77,6 +78,7 @@
             android:layout_marginTop="20dp"
             android:hint="@string/age"
             app:endIconMode="custom"
+
             app:suffixText="Years"
             app:startIconDrawable="@drawable/ic_baseline_call_24">
 
@@ -84,9 +86,8 @@
                 android:id="@+id/user_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cursorVisible="false"
-                android:inputType="number"
                 android:editable="false"
+                android:cursorVisible="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +119,7 @@
             android:layout_marginTop="20dp"
             app:suffixText="Liters"
             android:hint="@string/amount"
+            android:editable="false"
             app:endIconMode="custom"
             app:startIconDrawable="@drawable/ic_baseline_call_24">
 
@@ -126,7 +128,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:cursorVisible="false"
-                android:inputType="number"
                 android:editable="false"
                 android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -136,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:editable="false"
             android:hint="@string/location"
             app:endIconMode="custom"
             app:startIconDrawable="@drawable/ic_baseline_call_24">
@@ -243,6 +245,13 @@
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:text="@string/donate" />
+
+            <ImageView
+                android:id="@+id/share"
+                android:layout_width="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_baseline_share_24" />
         </LinearLayout>
     </LinearLayout>
 

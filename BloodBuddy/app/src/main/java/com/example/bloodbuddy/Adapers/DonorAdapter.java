@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,7 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
 
     Context context;
     ArrayList<Patient> donorArrayList;
-
+    String mob;
     public DonorAdapter(Context context, ArrayList<Patient> donorArrayList) {
         this.context = context;
         this.donorArrayList = donorArrayList;
@@ -42,16 +43,16 @@ public class DonorAdapter extends RecyclerView.Adapter<DonorAdapter.DonorViewHol
         holder.patientName.setText(patient.getDonateTo());
         holder.patientNumber.setText(patient.getSeekerContact());
         holder.bloodGrp.setText(patient.getSeekerBloodGrp());
-
+        mob=patient.getMobile();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i;
-
+                Toast.makeText(context,mob,Toast.LENGTH_LONG).show();
                 i =new Intent(context, RequestDetailAdmin.class);
                 i.putExtra("parent","admin");
                 i.putExtra("person","donor");
-                i.putExtra("mobile",patient.getMobile());
+                i.putExtra("mobile",mob);
                 context.startActivity(i);
             }
         });

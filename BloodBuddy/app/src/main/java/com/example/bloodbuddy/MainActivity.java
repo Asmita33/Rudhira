@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //Set notification count
-        bottomNavigation.setCount(4,"0");
+       //  bottomNavigation.setCount(4,"0");
         //Set home fragment initially selected
         bottomNavigation.show(2,true);
 
@@ -356,9 +356,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.my_request: displayRequest();
                 break;
-            case R.id.history: displayHistory();
-                break;
-
         }
         return true;
     }

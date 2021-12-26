@@ -39,6 +39,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     ArrayList<Users>  arrayList;
     private FirebaseFirestore db;
     private DocumentReference ref;
+    private FirebaseAuth auth;
+    private FirebaseUser currentUser;
+    Users user;
 
     public SearchAdapter(Context context, ArrayList<Users> arrayList) {
         this.context = context;
@@ -54,8 +57,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.SearchViewHolder holder, int position) {
-        Users user=arrayList.get(position);
+        user=arrayList.get(position);
         holder.name.setText(user.getName());
+        auth=FirebaseAuth.getInstance();
+        currentUser=auth.getCurrentUser();
         holder.info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +76,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                             i =new Intent(context, RequestDetailAdmin.class);
                             i.putExtra("parent","user");
                             i.putExtra("person","seeker");
-                            i.putExtra("mobile",user.getMobile().substring(3));
+                            i.putExtra("mobile",user.getMobile());
                             context.startActivity(i);
                         }else
                         {
@@ -103,7 +108,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             public void onClick(View v) {
 
                 db= FirebaseFirestore.getInstance();
-                ref=db.collection("DonorRequest").document(user.getMobile());
+                ref=db.collection("DonorRequest").document(currentUser.getPhoneNumber());
                 ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
@@ -138,11 +143,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                             }
                         }
 
+                        else
+                        {
+                            Toast.makeText(context,"does not exits",Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Toast.makeText(context,"ERROOOOOOO",Toast.LENGTH_LONG).show();
                     }
                 });
 

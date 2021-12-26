@@ -42,6 +42,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     public void onBindViewHolder(@NonNull RequestAdapter.RequestViewHolder holder, int position) {
         Patient patient=patientArrayList.get(position);
         holder.name.setText(patient.getName());
+        if(isAdmin)
         holder.number.setText(patient.getMobile());
         holder.condition.setText(patient.getCondition());
 

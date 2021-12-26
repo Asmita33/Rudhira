@@ -48,7 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         // data binding
 //        holder.image.setImage
         Glide.with(context).load(feed.getImage()).into(holder.image);
-        holder.text.setText(feed.getText() +"\n\n\n" +"URI: " +feed.getImage());
+        holder.text.setText(feed.getText());
     }
 
     @Override
