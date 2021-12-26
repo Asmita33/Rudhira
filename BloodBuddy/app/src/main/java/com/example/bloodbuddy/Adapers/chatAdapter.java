@@ -7,21 +7,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bloodbuddy.ChatActivity;
+import com.example.bloodbuddy.MainActivity;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.Users;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolder>
 {
+    private FirebaseFirestore db;
+    private DocumentReference ref;
+    String str;
     //HERE: our nested view holder class. It holds the view of each item/row in our RV
     public static class ChatViewHolder extends RecyclerView.ViewHolder
     {
@@ -74,6 +84,28 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
 
         holder.chatName.setText(user.getName());
 
+        db=FirebaseFirestore.getInstance();
+        ref=db.collection("Users").document(user.getMobile());
+
+       // Users user1=new Users();
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+                    {
+                        str=documentSnapshot.getString("imgUri");
+                          Glide.with(context).load(str)
+                                .placeholder(R.drawable.ic_profile).into(holder.chatProfilePic);
+
+                    }
+                }
+            }
+        });
+
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +113,8 @@ public class chatAdapter  extends RecyclerView.Adapter<chatAdapter.ChatViewHolde
                 i.putExtra("name", user.getName());
                 i.putExtra("uid", user.getUid());
                 i.putExtra("mobile", user.getMobile());
+
+
                 context.startActivity(i);
             }
         });
