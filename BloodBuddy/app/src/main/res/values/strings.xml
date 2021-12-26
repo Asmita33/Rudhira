@@ -51,6 +51,7 @@
     <string name="history">History</string>
     <string name="donate">Donate</string>
     <string name="ask_to_donate">Ask to donate</string>
+    <string name="searched_list">Searched List</string>
 
     <string-array name="blood_grps">
         <item>O +ve</item>

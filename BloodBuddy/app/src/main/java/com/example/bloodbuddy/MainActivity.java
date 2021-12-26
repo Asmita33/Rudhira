@@ -1,19 +1,27 @@
 package com.example.bloodbuddy;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,24 +29,41 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.bloodbuddy.Adapers.RequestAdapter;
+import com.example.bloodbuddy.Adapers.SearchAdapter;
 import com.example.bloodbuddy.bloodRequest.RaiseRequest;
+import com.example.bloodbuddy.bloodRequest.RequestList;
 import com.example.bloodbuddy.fragments.BloodBanksFragment;
 import com.example.bloodbuddy.fragments.ChatFragment;
 import com.example.bloodbuddy.fragments.FeedFragment;
 import com.example.bloodbuddy.fragments.MapFragment;
+import com.example.bloodbuddy.fragments.NotificationFragment;
 import com.example.bloodbuddy.fragments.RequestFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    MeowBottomNavigation bottomNavigation;
+
+    RecyclerView recyclerView;
+    ArrayList<Users> arrayList;
+    SearchAdapter searchAdapter;
+
+    private MeowBottomNavigation bottomNavigation;
     private DrawerLayout mDrawerLayout;
     private TextView welcomeNote;
     private ActionBarDrawerToggle mToggle;
@@ -52,9 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     static String username="";
     public  static String userphone="";
     private FirebaseAuth auth;
-    Users user=new Users();
+    private Users user=new Users();
     private FirebaseFirestore db;
+    private EditText search;
+    private TextInputLayout searchDetail;
     private DocumentReference ref,ref1;
+    private Dialog dialog;
+    private ImageView cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,8 +92,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().hide();
 
 
+
         // binding layouts
 
+        search=findViewById(R.id.search);
+        searchDetail=findViewById(R.id.txtInput_search);
+        dialog=new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.search_dialog);
+        ////
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+
+      //  searchedName=dialog.findViewById(R.id.searched_name);
         profileImage=findViewById(R.id.profile_img);
 
         mDrawerLayout=(DrawerLayout) findViewById(R.id.container);
@@ -84,6 +123,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ref=db.collection("Users").document(currentUser.getPhoneNumber());
         hView=navigationView.getHeaderView(0);
+
+
+        recyclerView=dialog.findViewById(R.id.recyclerView_search);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        arrayList = new ArrayList<Users>();
+        searchAdapter = new SearchAdapter(MainActivity.this,arrayList);
+        recyclerView.setAdapter(searchAdapter);
+
+        cancel=dialog.findViewById(R.id.cross);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         // binding
         userName=hView.findViewById(R.id.user_name);
@@ -124,6 +180,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(MainActivity.this,"Error in loading user profile image",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Searching
+        searchDetail.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Method to load search results
+
+                dialog.show();
+                loadSearch();
             }
         });
 
@@ -182,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_notification));
         bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_icons8_drop_of_blood_48__1_));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_baseline_location_searching_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_notification));
         bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_baseline_chat_24));
 
 
@@ -202,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         break;
                     case 3: fragment = new RequestFragment();
                         break;
-                    case 4: fragment = new BloodBanksFragment();
+                    case 4: fragment = new NotificationFragment();
                         break;
                     case 5: fragment = new ChatFragment();
                         break;
@@ -217,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //Set notification count
-        // bottomNavigation.setCount(1,"10");
+        bottomNavigation.setCount(4,"0");
         //Set home fragment initially selected
         bottomNavigation.show(2,true);
 
@@ -234,6 +301,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    }
+
+    private void loadSearch()
+    {
+        db.collection("Users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error!=null)
+                {
+                    Log.e("Firestore error",error.getMessage());
+                    return;
+                }
+                for(DocumentChange dc: value.getDocumentChanges())
+                {
+                    String searched_Name=dc.getDocument().getString("name");
+                    String searched_No=dc.getDocument().getString("mobile");
+
+                    if(dc.getType() == DocumentChange.Type.ADDED)
+                        {
+                                if(searched_Name.equals(search.getText().toString()) &&
+                                        !searched_No.equals(currentUser.getPhoneNumber()))
+                                {
+
+                                    arrayList.add(dc.getDocument().toObject(Users.class));
+
+                                }
+                        }
+
+
+                     searchAdapter.notifyDataSetChanged();
+
+
+                }
+            }
+        });
     }
 
     // For side navigation Menu Items

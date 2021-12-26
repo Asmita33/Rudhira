@@ -54,8 +54,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 i.putExtra("parent","admin");
                 if(isUser)
                 i.putExtra("parent","user");
+                i.putExtra("person","seeker");
                 i.putExtra("mobile",patient.getMobile());
-              // Toast.makeText(context,patient.getMobile().toString(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,patient.getMobile().toString(),Toast.LENGTH_LONG).show();
                 context.startActivity(i);
             }
         });

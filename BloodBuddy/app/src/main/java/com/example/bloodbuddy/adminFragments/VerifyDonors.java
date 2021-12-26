@@ -109,6 +109,7 @@ public class VerifyDonors extends Fragment {
                     if(progressDialog.isShowing())
                         progressDialog.dismiss();
                 }
+                progressDialog.dismiss();
             }
         });
     }

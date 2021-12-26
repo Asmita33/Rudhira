@@ -16,6 +16,8 @@ public class Patient {
     private String received="false";
     private String donated="false";
     private String donateTo;
+    private String seekerBloodGrp;
+    private String seekerContact;
 
     public String getSeekerBloodGrp() {
         return seekerBloodGrp;
@@ -25,8 +27,6 @@ public class Patient {
         this.seekerBloodGrp = seekerBloodGrp;
     }
 
-    private String seekerBloodGrp;
-    private String seekerContact;
 
     public String getSeekerContact() {
         return seekerContact;

@@ -86,6 +86,7 @@ public class RegisteredRequests extends AppCompatActivity {
                     if(progressDialog.isShowing())
                         progressDialog.dismiss();
                 }
+                progressDialog.dismiss();
             }
         });
     }

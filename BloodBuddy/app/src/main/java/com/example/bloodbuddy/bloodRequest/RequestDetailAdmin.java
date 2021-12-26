@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bloodbuddy.AdminMainActivity;
+import com.example.bloodbuddy.Notification;
 import com.example.bloodbuddy.Patient;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.UserProfile;
@@ -20,6 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,10 +30,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RequestDetailAdmin extends AppCompatActivity {
 
     ActivityRequestDetailAdminBinding activityRequestAdminBinding;
-    private String number,parent;
+    private String number,parent,person,request="Request";
     private FirebaseFirestore db;
     private DocumentReference ref;
-    Patient patient=new Patient();
+    static  Patient patient=new Patient();
+    private DatabaseReference mDatabase;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +45,23 @@ public class RequestDetailAdmin extends AppCompatActivity {
 
         parent=getIntent().getStringExtra("parent");
         number=getIntent().getStringExtra("mobile");
-        db=FirebaseFirestore.getInstance();
-        ref=db.collection("Request").document("+91"+number);
+        person=getIntent().getStringExtra("person");
 
+        if(person.equals("donor"))
+        {
+            request="DonorRequest";
+        }
+
+        db=FirebaseFirestore.getInstance();
+        ref=db.collection(request).document("+91"+number);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //If parent activity is from user
         if(parent.equals("user"))
         {
+            activityRequestAdminBinding.txtInputEmail.setVisibility(View.GONE);
+            activityRequestAdminBinding.txtInputNumber.setVisibility(View.GONE);
+            activityRequestAdminBinding.txtInputDocument.setVisibility(View.GONE);
             activityRequestAdminBinding.adminLayout.setVisibility(View.GONE);
             activityRequestAdminBinding.userLayout.setVisibility(View.VISIBLE);
         }
@@ -67,6 +81,13 @@ public class RequestDetailAdmin extends AppCompatActivity {
                      patient.setLocation(documentSnapshot.getString("location"));
                      patient.setAge(documentSnapshot.getString("age"));
                      patient.setPdfUrl(documentSnapshot.getString("pdfUrl"));
+                     patient.setSeekerContact(documentSnapshot.getString("seekerContact"));
+                     patient.setSeekerBloodGrp(documentSnapshot.getString("seekerBloodGrp"));
+                     patient.setDonateTo(documentSnapshot.getString("donateTo"));
+                     patient.setDonated(documentSnapshot.getString("donated"));
+                     patient.setIsValid(documentSnapshot.getString("isValid"));
+                     patient.setReceived(documentSnapshot.getString("received"));
+
 
                      activityRequestAdminBinding.userNameInput.setText(patient.getName());
                      activityRequestAdminBinding.userEmail.setText(patient.getEmail());
@@ -92,12 +113,53 @@ public class RequestDetailAdmin extends AppCompatActivity {
             public void onClick(View v) {
 
                  patient.setIsValid("true");
-                 db.collection("Request").document("+91"+patient.getMobile())
+                 db.collection(request).document("+91"+patient.getMobile())
                          .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
                      public void onSuccess(@NonNull Void aVoid) {
                          Toast.makeText(RequestDetailAdmin.this,"Marked as genuine request",
                                  Toast.LENGTH_LONG).show();
+                         Notification notification=new Notification();
+                         if(request.equals("DonorRequest"))
+                         {
+                             String msg1="You have been verified, the seeker would contact you soon." +
+                                     "We thank you for your initiative";
+                             String msg2="Name of Seeker : "+patient.getDonateTo();
+                             String msg3="Contact No. Seeker : "+patient.getSeekerContact();
+
+
+                             notification.setMsg1(msg1);
+                             notification.setMsg2(msg2);
+                             notification.setMsg3(msg3);
+
+                             mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                     .push().setValue(notification);//push for generation unique id
+
+                             msg1="One of our verified users wants to donate blood to you";
+                             msg2="Name of Donor: "+patient.getName();
+                             msg3="Number: "+patient.getMobile()+" Email: "+patient.getEmail();
+
+                             notification.setMsg1(msg1);
+                             notification.setMsg2(msg2);
+                             notification.setMsg3(msg3);
+
+                             mDatabase.child("Notifications").child("+91"+patient.getSeekerContact()).
+                                     push().setValue(notification);
+
+                         }
+                         else
+                         {
+                             String msg1="Your request has been verified";
+                             String msg2="We'll contact you soon.";
+                             String msg3="";
+                             notification.setMsg1(msg1);
+                             notification.setMsg2(msg2);
+                             notification.setMsg3(msg3);
+
+                             mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                     .push().setValue(notification);//push for generation unique id
+                         }
+
                      }
                  });
             // Message to user on acceptance of request
@@ -112,6 +174,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                  Intent i= new Intent(RequestDetailAdmin.this,DonateBlood.class);
                  i.putExtra("name",patient.getName());
                  i.putExtra("number",patient.getMobile());
+                 i.putExtra("blood",patient.getBloodGrp());
                  startActivity(i);
             }
         });
@@ -126,13 +189,37 @@ public class RequestDetailAdmin extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            db.collection("Request").document("+91"+patient.getMobile()).delete()
+                            db.collection(request).document("+91"+patient.getMobile()).delete()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
-                                            {
+                                            {   Notification notification=new Notification();
                                                 Toast.makeText(RequestDetailAdmin.this,"Request Deleted",Toast.LENGTH_SHORT).show();
+                                                if(request.equals("DonorRequest"))
+                                                {
+                                                    String msg1="You are not verified to donate.";
+                                                    String msg2="";
+                                                    String msg3="";
+                                                    notification.setMsg1(msg1);
+                                                    notification.setMsg2(msg2);
+                                                    notification.setMsg3(msg3);
+
+                                                    mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                                            .push().setValue(notification);//push for generation unique id
+                                                }
+                                                else
+                                                {
+
+                                                    String msg1="Your request has been rejected";
+                                                    String msg2="";
+                                                    String msg3="";
+                                                    notification.setMsg1(msg1);
+                                                    notification.setMsg2(msg2);
+                                                    notification.setMsg3(msg3);
+                                                    mDatabase.child("Notifications").child("+91"+patient.getMobile())
+                                                            .push().setValue(notification);//push for generation unique id
+                                                }
                                                 Intent i=new Intent(RequestDetailAdmin.this, AdminMainActivity.class);
                                                 startActivity(i);
                                             }
