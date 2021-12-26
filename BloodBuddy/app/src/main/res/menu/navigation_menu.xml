@@ -5,10 +5,6 @@
         android:icon="@drawable/ic_icons8_drop_of_blood_48__1_"
         android:title="@string/my_request"/>
 
-    <item android:id="@+id/history"
-        android:icon="@drawable/ic_baseline_exit"
-        android:title="@string/history"/>
-
     <item android:id="@+id/logOut"
         android:icon="@drawable/ic_baseline_exit"
         android:title="@string/log_out"/>

@@ -45,26 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:textStyle="bold"
-                android:text="Contact number:" />
-
-            <TextView
-                android:id="@+id/number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textStyle="bold"
                 android:text="Condition:" />
 
             <TextView
@@ -74,6 +54,22 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/number"
+                android:layout_marginLeft="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
