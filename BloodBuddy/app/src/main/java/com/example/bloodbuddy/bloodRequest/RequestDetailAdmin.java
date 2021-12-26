@@ -81,31 +81,32 @@ public class RequestDetailAdmin extends AppCompatActivity {
             public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists())
                 {
-                     patient.setName(documentSnapshot.getString("name"));
-                     patient.setMobile(documentSnapshot.getString("mobile"));
-                     patient.setAmount(documentSnapshot.getString("amount"));
-                     patient.setCondition(documentSnapshot.getString("condition"));
-                     patient.setEmail(documentSnapshot.getString("email"));
-                     patient.setBloodGrp(documentSnapshot.getString("bloodGrp"));
-                     patient.setLocation(documentSnapshot.getString("location"));
-                     patient.setAge(documentSnapshot.getString("age"));
-                     patient.setPdfUrl(documentSnapshot.getString("pdfUrl"));
-                     patient.setSeekerContact(documentSnapshot.getString("seekerContact"));
-                     patient.setSeekerBloodGrp(documentSnapshot.getString("seekerBloodGrp"));
-                     patient.setDonateTo(documentSnapshot.getString("donateTo"));
-                     patient.setDonated(documentSnapshot.getString("donated"));
-                     patient.setIsValid(documentSnapshot.getString("isValid"));
-                     patient.setReceived(documentSnapshot.getString("received"));
+                    patient.setName(documentSnapshot.getString("name"));
+                    patient.setMobile(documentSnapshot.getString("mobile"));
+                    patient.setAmount(documentSnapshot.getString("amount"));
+                    patient.setCondition(documentSnapshot.getString("condition"));
+                    patient.setEmail(documentSnapshot.getString("email"));
+                    patient.setBloodGrp(documentSnapshot.getString("bloodGrp"));
+                    patient.setLocation(documentSnapshot.getString("location"));
+                    patient.setAge(documentSnapshot.getString("age"));
+                    patient.setPdfUrl(documentSnapshot.getString("pdfUrl"));
+                    patient.setSeekerContact(documentSnapshot.getString("seekerContact"));
+                    patient.setSeekerBloodGrp(documentSnapshot.getString("seekerBloodGrp"));
+                    patient.setDonateTo(documentSnapshot.getString("donateTo"));
+                    patient.setDonated(documentSnapshot.getString("donated"));
+                    patient.setIsValid(documentSnapshot.getString("isValid"));
+                    patient.setReceived(documentSnapshot.getString("received"));
 
 
-                     activityRequestAdminBinding.userNameInput.setText(patient.getName());
-                     activityRequestAdminBinding.userEmail.setText(patient.getEmail());
-                     activityRequestAdminBinding.userNumber.setText(patient.getMobile());
-                     activityRequestAdminBinding.userAge.setText(patient.getAge());
-                     activityRequestAdminBinding.condition.setText(patient.getCondition());
-                     activityRequestAdminBinding.userLocation.setText(patient.getLocation());
-                     activityRequestAdminBinding.userAmount.setText(patient.getAmount());
-                     activityRequestAdminBinding.bloodGrp.setText(patient.getBloodGrp());
+                    activityRequestAdminBinding.userNameInput.setText(patient.getName());
+                    activityRequestAdminBinding.userEmail.setText(patient.getEmail());
+                    activityRequestAdminBinding.userNumber.setText(patient.getMobile());
+                    activityRequestAdminBinding.userAge.setText(patient.getAge());
+                    activityRequestAdminBinding.condition.setText(patient.getCondition());
+                    activityRequestAdminBinding.userLocation.setText(patient.getLocation());
+                    activityRequestAdminBinding.userAmount.setText(patient.getAmount());
+                    activityRequestAdminBinding.bloodGrp.setText(patient.getBloodGrp());
+
 
                 }
             }
@@ -121,71 +122,95 @@ public class RequestDetailAdmin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                 patient.setIsValid("true");
+                patient.setIsValid("true");
 
 
-                 db.collection(request).document(patient.getMobile())
-                         .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
-                     @Override
-                     public void onSuccess(@NonNull Void aVoid) {
-                         Toast.makeText(RequestDetailAdmin.this,"Marked as genuine request",
-                                 Toast.LENGTH_LONG).show();
-                         Notification notification=new Notification();
-                         if(request.equals("DonorRequest"))
-                         {
-                             String msg1="You have been verified, the seeker would contact you soon." +
-                                     "We thank you for your initiative";
-                             String msg2="Name of Seeker : "+patient.getDonateTo();
-                             String msg3="Contact No. Seeker : "+patient.getSeekerContact();
+                db.collection(request).document(patient.getMobile())
+                        .set(patient).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(@NonNull Void aVoid) {
+                        Toast.makeText(RequestDetailAdmin.this,"Marked as genuine request",
+                                Toast.LENGTH_LONG).show();
+                        Notification notification=new Notification();
+                        if(request.equals("DonorRequest"))
+                        {
+                            String msg1="You have been verified, the seeker would contact you soon." +
+                                    "We thank you for your initiative";
+                            String msg2="Name of Seeker : "+patient.getDonateTo();
+                            String msg3="Contact No. Seeker : "+patient.getSeekerContact();
 
+                            if(ContextCompat.checkSelfPermission(RequestDetailAdmin.this, Manifest.permission.SEND_SMS)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                //when permission is granted, create method
+                                String messg= "You have been verified, the seeker would contact you soon. " +
+                                        "We thank you for your initiative!";
+                                sendMessage(patient.getMobile(), messg);
+                            }else{
+                                ActivityCompat.requestPermissions(RequestDetailAdmin.this
+                                        , new String[] {Manifest.permission.SEND_SMS}
+                                        , 100);
+                            }
 
-                             notification.setMsg1(msg1);
-                             notification.setMsg2(msg2);
-                             notification.setMsg3(msg3);
+                            notification.setMsg1(msg1);
+                            notification.setMsg2(msg2);
+                            notification.setMsg3(msg3);
 
-                             mDatabase.child("Notifications").child(patient.getMobile())
-                                     .child( String.valueOf(date.getTime()) ).setValue(notification);//push for generation unique id
+                            mDatabase.child("Notifications").child(patient.getMobile())
+                                    .child( String.valueOf(date.getTime()) ).setValue(notification);//push for generation unique id
 
-                             msg1="One of our verified users wants to donate blood to you";
-                             msg2="Name of Donor: "+patient.getName();
-                             msg3="Number: "+patient.getMobile()+" Email: "+patient.getEmail()+
-                                     "\nThey will contact you soon.";
+                            msg1="One of our verified users wants to donate blood to you";
+                            msg2="Name of Donor: "+patient.getName();
+                            msg3="Number: "+patient.getMobile()+" Email: "+patient.getEmail()+
+                                    "\nThey will contact you soon.";
 
-                             notification.setMsg1(msg1);
-                             notification.setMsg2(msg2);
-                             notification.setMsg3(msg3);
+                            if(ContextCompat.checkSelfPermission(RequestDetailAdmin.this, Manifest.permission.SEND_SMS)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                //when permission is granted, create method
+                                String messg= "One of our verified users wants to donate blood to you. "+
+                                        "Name of Donor: "+patient.getName()+
+                                        "\nNumber: "+patient.getMobile()+"\nEmail: "+patient.getEmail();
+                                sendMessage(patient.getSeekerContact(), messg);
+                            }else{
+                                ActivityCompat.requestPermissions(RequestDetailAdmin.this
+                                        , new String[] {Manifest.permission.SEND_SMS}
+                                        , 100);
+                            }
 
-                             mDatabase.child("Notifications").child(patient.getSeekerContact()).
-                                     child( String.valueOf(date.getTime()) ).setValue(notification);
+                            notification.setMsg1(msg1);
+                            notification.setMsg2(msg2);
+                            notification.setMsg3(msg3);
 
-                         }
-                         else
-                         {
-                             String msg1="Your request has been verified";
-                             String msg2="We'll contact you soon.";
-                             String msg3="";
-                             notification.setMsg1(msg1);
-                             notification.setMsg2(msg2);
-                             notification.setMsg3(msg3);
+                            mDatabase.child("Notifications").child(patient.getSeekerContact()).
+                                    child( String.valueOf(date.getTime()) ).setValue(notification);
 
-                             //message to seaker
-                             if(ContextCompat.checkSelfPermission(RequestDetailAdmin.this, Manifest.permission.SEND_SMS)
-                                     == PackageManager.PERMISSION_GRANTED) {
-                                 //when permission is granted, create method
-                                 String messg= "Your request has been verified! "+"We'll contact you soon.";
-                                 sendMessage(patient.getMobile(), messg);
-                             }else{
-                                 ActivityCompat.requestPermissions(RequestDetailAdmin.this
-                                         , new String[] {Manifest.permission.SEND_SMS}
-                                         , 100);
-                             }
+                        }
+                        else
+                        {
+                            String msg1="Your request has been verified";
+                            String msg2="We'll contact you soon.";
+                            String msg3="";
+                            notification.setMsg1(msg1);
+                            notification.setMsg2(msg2);
+                            notification.setMsg3(msg3);
 
-                             mDatabase.child("Notifications").child(patient.getMobile())
-                                     .push().setValue(notification);//push for generation unique id
-                         }
+                            //message to seaker
+                            if(ContextCompat.checkSelfPermission(RequestDetailAdmin.this, Manifest.permission.SEND_SMS)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                //when permission is granted, create method
+                                String messg= "Your request has been verified! "+"We'll contact you soon.";
+                                sendMessage(patient.getMobile(), messg);
+                            }else{
+                                ActivityCompat.requestPermissions(RequestDetailAdmin.this
+                                        , new String[] {Manifest.permission.SEND_SMS}
+                                        , 100);
+                            }
 
-                     }
-                 });
+                            mDatabase.child("Notifications").child(patient.getMobile())
+                                    .push().setValue(notification);//push for generation unique id
+                        }
+
+                    }
+                });
 
 
             }
@@ -195,11 +220,11 @@ public class RequestDetailAdmin extends AppCompatActivity {
         activityRequestAdminBinding.donate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent i= new Intent(RequestDetailAdmin.this,DonateBlood.class);
-                 i.putExtra("name",patient.getName());
-                 i.putExtra("number",patient.getMobile());
-                 i.putExtra("blood",patient.getBloodGrp());
-                 startActivity(i);
+                Intent i= new Intent(RequestDetailAdmin.this,DonateBlood.class);
+                i.putExtra("name",patient.getName());
+                i.putExtra("number",patient.getMobile());
+                i.putExtra("blood",patient.getBloodGrp());
+                startActivity(i);
             }
         });
 
@@ -214,6 +239,8 @@ public class RequestDetailAdmin extends AppCompatActivity {
                         patient.getName()+", is in "+patient.getCondition()+" condition"+" and needs "+patient.getBloodGrp()+" group blood urgently.\n\n"+"You can " +
                         "donate blood by visiting at "+patient.getLocation()+". For more information about patient, Contact: "+patient.getMobile()+".\n\nNote:\nAnyone between 18 and 65 years of age and in normal health can donate blood.");
 
+                Intent chooser = Intent.createChooser(intent, "Share via");
+                startActivity(chooser);
             }
         });
 
@@ -222,20 +249,6 @@ public class RequestDetailAdmin extends AppCompatActivity {
             public void onClick(View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(patient.getPdfUrl()));
                 startActivity(browserIntent);
-            }
-        });
-
-        //View document
-        activityRequestAdminBinding.txtInputDocument.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
-                          pdf=documentSnapshot.getString("pdfUrl");
-
-                Intent chooser = Intent.createChooser(intent, "Share via");
-                startActivity(chooser);
             }
         });
 
@@ -249,42 +262,42 @@ public class RequestDetailAdmin extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            db.collection(request).document(patient.getMobile()).delete()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {   Notification notification=new Notification();
-                                                Toast.makeText(RequestDetailAdmin.this,"Request Deleted",Toast.LENGTH_SHORT).show();
-                                                if(request.equals("DonorRequest"))
-                                                {
-                                                    String msg1="You are not verified to donate.";
-                                                    String msg2="";
-                                                    String msg3="";
-                                                    notification.setMsg1(msg1);
-                                                    notification.setMsg2(msg2);
-                                                    notification.setMsg3(msg3);
+                        db.collection(request).document(patient.getMobile()).delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                        {   Notification notification=new Notification();
+                                            Toast.makeText(RequestDetailAdmin.this,"Request Deleted",Toast.LENGTH_SHORT).show();
+                                            if(request.equals("DonorRequest"))
+                                            {
+                                                String msg1="You are not verified to donate.";
+                                                String msg2="";
+                                                String msg3="";
+                                                notification.setMsg1(msg1);
+                                                notification.setMsg2(msg2);
+                                                notification.setMsg3(msg3);
 
-                                                    mDatabase.child("Notifications").child(patient.getMobile())
-                                                            .push().setValue(notification);//push for generation unique id
-                                                }
-                                                else
-                                                {
-
-                                                    String msg1="Your request has been rejected";
-                                                    String msg2="";
-                                                    String msg3="";
-                                                    notification.setMsg1(msg1);
-                                                    notification.setMsg2(msg2);
-                                                    notification.setMsg3(msg3);
-                                                    mDatabase.child("Notifications").child(patient.getMobile())
-                                                            .push().setValue(notification);//push for generation unique id
-                                                }
-                                                Intent i=new Intent(RequestDetailAdmin.this, AdminMainActivity.class);
-                                                startActivity(i);
+                                                mDatabase.child("Notifications").child(patient.getMobile())
+                                                        .push().setValue(notification);//push for generation unique id
                                             }
+                                            else
+                                            {
+
+                                                String msg1="Your request has been rejected";
+                                                String msg2="";
+                                                String msg3="";
+                                                notification.setMsg1(msg1);
+                                                notification.setMsg2(msg2);
+                                                notification.setMsg3(msg3);
+                                                mDatabase.child("Notifications").child(patient.getMobile())
+                                                        .push().setValue(notification);//push for generation unique id
+                                            }
+                                            Intent i=new Intent(RequestDetailAdmin.this, AdminMainActivity.class);
+                                            startActivity(i);
                                         }
-                                    });
+                                    }
+                                });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
