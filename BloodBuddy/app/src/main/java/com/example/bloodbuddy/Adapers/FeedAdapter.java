@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.modelClasses.Feed;
 
@@ -45,8 +46,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         // contents of the view with that element
 
         // data binding
-        holder.image.setImageResource(feed.getImage());
-        holder.name.setText(feed.getText());
+//        holder.image.setImage
+        Glide.with(context).load(feed.getImage()).into(holder.image);
+        holder.text.setText(feed.getText() +"\n\n\n" +"URI: " +feed.getImage());
     }
 
     @Override
@@ -58,14 +60,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     public static class FeedViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image;
-        TextView name;
+        TextView text;
 
         public FeedViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // binding the elements
             image = itemView.findViewById(R.id.feed_row_img);
-            name = itemView.findViewById(R.id.feed_row_text);
+            text = itemView.findViewById(R.id.feed_row_text);
         }
     }
 }

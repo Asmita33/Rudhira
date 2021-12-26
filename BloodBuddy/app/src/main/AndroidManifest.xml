@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bloodRequest.DonateBlood"></activity>
+        <activity
+            android:name=".CreateFeed"
+            android:exported="false" />
+        <activity android:name=".bloodRequest.DonateBlood" />
         <activity android:name=".History" />
         <activity android:name=".bloodRequest.History.Donors" />
         <activity android:name=".bloodRequest.History.RegisteredRequests" />

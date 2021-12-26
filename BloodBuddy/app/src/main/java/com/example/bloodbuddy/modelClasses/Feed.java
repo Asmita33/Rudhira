@@ -1,19 +1,23 @@
 package com.example.bloodbuddy.modelClasses;
 
+import android.net.Uri;
+
 public class Feed
 {
     private String text;
-    private int image;
+    private String image;
     private String link;
 
+    public Feed(){}
 
-    public Feed(String text, int image, String link) {
+
+    public Feed(String text, String image, String link) {
         this.text = text;
         this.image = image;
         this.link = link;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -25,7 +29,7 @@ public class Feed
         this.text = text;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

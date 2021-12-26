@@ -1,5 +1,6 @@
 package com.example.bloodbuddy.adminFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bloodbuddy.CreateFeed;
 import com.example.bloodbuddy.R;
 import com.example.bloodbuddy.fragments.FeedFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +30,7 @@ public class Updates extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    FloatingActionButton updateFeedFab;
 
     public Updates() {
         // Required empty public constructor
@@ -65,6 +69,18 @@ public class Updates extends Fragment {
         // Inflate the layout for this fragment
 
         getChildFragmentManager().beginTransaction().add(R.id.admin_updates_fragment, new FeedFragment()).commit();
-        return inflater.inflate(R.layout.fragment_updates, container, false);
+        View view = inflater.inflate(R.layout.fragment_updates, container, false);
+        updateFeedFab = view.findViewById(R.id.update_feed_fab);
+
+        updateFeedFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), CreateFeed.class));
+            }
+        });
+
+
+
+        return view;
     }
 }
