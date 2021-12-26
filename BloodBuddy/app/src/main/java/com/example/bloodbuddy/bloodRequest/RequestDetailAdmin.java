@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -105,6 +106,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                      activityRequestAdminBinding.userLocation.setText(patient.getLocation());
                      activityRequestAdminBinding.userAmount.setText(patient.getAmount());
                      activityRequestAdminBinding.bloodGrp.setText(patient.getBloodGrp());
+
 
                 }
             }
@@ -241,20 +243,7 @@ public class RequestDetailAdmin extends AppCompatActivity {
                 startActivity(chooser);
             }
         });
-
-        //View document
-        activityRequestAdminBinding.txtInputDocument.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(@NonNull DocumentSnapshot documentSnapshot) {
-                          pdf=documentSnapshot.getString("pdfUrl");
-                            
-                    }
-                });
-            }
-        });
+        
         //Deleting Request
         activityRequestAdminBinding.deleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
