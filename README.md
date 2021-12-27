@@ -1,9 +1,9 @@
 # Rudhira - A Social Service App
 Rudhira is a Social Service App to connect blood donors and seekers through an efficient and verified process.
 
-#### App's APK :
+#### App's APK : https://drive.google.com/file/d/1IVwVAC984Imyp4I467AGJo1YzmzU2r_y/view?usp=sharing
 #### Github repo URL : https://github.com/Asmita33/Rudhira
-#### Demo Video:
+#### Demo Video: https://drive.google.com/file/d/1rOp-x2-2UlJp0dUPhPec4cu0VcAEjQXo/view?usp=sharing
 ## App Basic Features:
 1. Option to raise a blood request:
 2. Blood group
